@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* Palette A (Noir + Or). Definie en tokens Tailwind v4 via @theme.
+   Chaque variable --color-* genere les utilitaires correspondants
+   (bg-*, text-*, border-*). */
+@theme {
+  --color-background: #0a0a0f;
+  --color-surface: #111118;
+  --color-surface-raised: #18181f;
+  --color-surface-muted: #1f1f28;
+  --color-border: #2a2a35;
+  --color-border-strong: #4a4535;
+
+  --color-ink: #f5f0e8;
+  --color-ink-soft: #9a9080;
+  --color-ink-faint: #4a4540;
+
+  --color-primary: #d4a847;
+  --color-primary-hover: #b8892e;
+  --color-accent: #f0c866;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+
+  --animate-float: float 14s ease-in-out infinite;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: #0a0a0f;
+  }
+
+  /* Decalage des ancres pour ne pas passer sous la nav fixe. */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Titre en degrade or. */
+.text-gradient-gold {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-accent) 0%,
+    var(--color-primary) 45%,
+    var(--color-primary-hover) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Halo lumineux dore (decor de fond). */
+.glow-gold {
+  background: radial-gradient(
+    circle at center,
+    rgba(212, 168, 71, 0.22) 0%,
+    rgba(212, 168, 71, 0.08) 35%,
+    rgba(212, 168, 71, 0) 70%
+  );
+}
+
+/* Grain subtil pour casser les aplats et donner du relief. */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Liseré dore sur les cartes au survol. */
+.card-hairline {
+  position: relative;
+  isolation: isolate;
+}
+.card-hairline::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    140deg,
+    rgba(240, 200, 102, 0.55),
+    rgba(212, 168, 71, 0) 45%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+.card-hairline:hover::after {
+  opacity: 1;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -4%, 0) scale(1.06);
+  }
+}
+
+/* Respect des preferences d'accessibilite. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

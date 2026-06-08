@@ -1,0 +1,21 @@
+# Dependances
+/node_modules
+
+# Build Next.js et export statique
+/.next
+/out
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environnement et secrets (ne jamais committer)
+.env
+.env.local
+.env*.local
+.claude/mcp.json
+
+# Divers
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts

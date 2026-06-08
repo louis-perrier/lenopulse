@@ -11,7 +11,7 @@ export default function Hero({ dict }: { dict: Dictionary }) {
     <section id="top" className="relative overflow-hidden">
       {/* Decor de fond : halos dores flottants + grain. */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="glow-gold absolute -top-32 left-1/2 h-[42rem] w-[42rem] -translate-x-1/2 animate-[var(--animate-float)] rounded-full blur-3xl" />
+        <div className="glow-gold absolute -top-32 left-1/2 h-[42rem] w-[42rem] -translate-x-1/2 animate-float rounded-full blur-3xl" />
         <div className="glow-gold absolute -right-40 top-40 h-[30rem] w-[30rem] rounded-full opacity-60 blur-3xl" />
         <div className="grain" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-background" />

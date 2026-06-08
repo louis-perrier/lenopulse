@@ -20,6 +20,8 @@ export default function RootRedirect() {
         </span>
         <p className="mt-3 text-sm text-ink-soft">Chargement.</p>
         <noscript>
+          {/* Fallback sans JavaScript : liens HTML bruts volontaires (Link inutile ici). */}
+          {/* eslint-disable @next/next/no-html-link-for-pages */}
           <p className="mt-4 text-sm text-ink-soft">
             <a className="text-primary underline" href="/fr/">
               Francais
@@ -31,6 +33,7 @@ export default function RootRedirect() {
               Espanol
             </a>
           </p>
+          {/* eslint-enable @next/next/no-html-link-for-pages */}
         </noscript>
       </div>
     </main>

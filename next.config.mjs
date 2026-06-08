@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Fixe la racine du projet (des lockfiles existent dans des dossiers voisins).
+  turbopack: { root: import.meta.dirname },
   // Export statique pour Cloudflare Pages (aucun serveur Node requis).
   output: "export",
   // Obligatoire en export statique : pas d'optimisation d'images cote serveur.

@@ -3,8 +3,9 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Dictionary, WorkItem } from "@/lib/i18n/types";
+import { workAssets } from "@/lib/site";
 import CaseVisual from "./CaseVisual";
-import { IconClose, IconCheck } from "./Icons";
+import { IconClose, IconCheck, IconArrow } from "./Icons";
 
 type ModalProps = {
   item: WorkItem | null;
@@ -79,6 +80,19 @@ export default function CaseStudyModal({ item, index, dict, onClose }: ModalProp
                 <IconCheck className="h-5 w-5 shrink-0 text-primary" />
                 <span className="font-medium text-ink">{item.result}</span>
               </div>
+
+              {/* Lien discret, nouvel onglet : le visiteur ne quitte pas le site. */}
+              {workAssets[item.id]?.url && (
+                <a
+                  href={workAssets[item.id].url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-accent"
+                >
+                  {dict.common.visit}
+                  <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+              )}
             </div>
           </motion.div>
         </motion.div>

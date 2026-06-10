@@ -1,20 +1,34 @@
 // Coordonnees et liens du site.
-// A REMPLACER par les vraies valeurs. Ces placeholders permettent au site de
-// fonctionner immediatement, mais doivent etre mis a jour avant mise en ligne.
 
 export const siteConfig = {
   brand: "LOUAI",
 
-  // TODO: confirmer l'adresse qui recevra les messages du formulaire de contact.
-  contactEmail: "contact@louai.fr",
+  // Adresse qui recoit les messages du formulaire de contact (mailto).
+  contactEmail: "louis.perrier.chenoise@gmail.com",
 
-  // TODO: remplacer chaque "#" par l'URL reelle. Laisser "#" masque le lien.
+  // Laisser "#" masque automatiquement le lien correspondant.
   socials: {
-    youtube: "#",
-    instagram: "#",
-    whatsapp: "#", // format conseille : https://wa.me/33XXXXXXXXX
-    linkedin: "#",
+    youtube: "https://www.youtube.com/@louis-perrier",
+    instagram: "https://instagram.com/louis.pilc",
+    whatsapp: "https://wa.me/33781494953",
+    linkedin: "https://www.linkedin.com/in/louis-perrier-lautopreneur/",
   },
 };
 
 export type SocialKey = keyof typeof siteConfig.socials;
+
+// Visuels et liens reels des realisations, communs aux 3 langues (non traduits).
+// image : capture plein cadre (object-cover). logo : logo centre sur le fond
+// degrade dore (object-contain). url : ouverte dans un nouvel onglet pour ne pas
+// faire quitter le site au visiteur. Fichiers dans public/realisations/.
+export const workAssets: Record<
+  string,
+  { image?: string; logo?: string; url?: string }
+> = {
+  leadcontrol: { logo: "/realisations/leadcontrol.png", url: "https://leadcontrol.fr" },
+  hestiaai: { logo: "/realisations/hestiaai.png", url: "https://hestiaai.app" },
+  receptionist: { image: "/realisations/receptionist.png" },
+  trading: {},
+  n8n: { image: "/realisations/n8n.png" },
+  websiteai: { image: "/realisations/websiteai.png", url: "https://ortkebab.fr" },
+};

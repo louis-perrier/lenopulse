@@ -111,11 +111,11 @@ export const en: Dictionary = {
       },
       {
         id: "trading",
-        name: "Trading bot",
+        name: "Market analysis agent",
         tag: "Automation",
         teaser: "Decisions, without emotion.",
         description:
-          "A bot that executes a trading strategy in a disciplined, automatic way.",
+          "An agent that watches the markets and applies a strategy with discipline, no fatigue, no emotion. Currently in development.",
         result: "Discipline, without the fatigue.",
       },
       {
@@ -141,6 +141,7 @@ export const en: Dictionary = {
   about: {
     title: "Behind LOUAI, a single point of contact",
     body: "Me, Louis. No agency, no middleman. You talk directly to the person who designs and builds. I work with my clients in three languages, to stay close wherever you are.",
+    photoAlt: "Louis, the face behind LOUAI",
     languagesLabel: "Available in",
     languages: ["French", "English", "Spanish"],
   },
@@ -171,6 +172,7 @@ export const en: Dictionary = {
   common: {
     close: "Close",
     discover: "Discover",
+    visit: "View the project",
     backHome: "Back to home",
   },
 };

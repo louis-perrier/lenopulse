@@ -111,11 +111,11 @@ export const es: Dictionary = {
       },
       {
         id: "trading",
-        name: "Bot de trading",
+        name: "Agente de análisis de mercados",
         tag: "Automatización",
         teaser: "Decisiones, sin emoción.",
         description:
-          "Un bot que ejecuta una estrategia de trading de forma disciplinada y automática.",
+          "Un agente que observa los mercados y aplica una estrategia con disciplina, sin cansancio y sin emoción. Actualmente en desarrollo.",
         result: "La disciplina, sin el cansancio.",
       },
       {
@@ -141,6 +141,7 @@ export const es: Dictionary = {
   about: {
     title: "Detrás de LOUAI, un solo interlocutor",
     body: "Yo, Louis. Sin agencia, sin intermediarios. Hablas directamente con la persona que diseña y construye. Trabajo con mis clientes en tres idiomas, para estar cerca estés donde estés.",
+    photoAlt: "Louis, el rostro detrás de LOUAI",
     languagesLabel: "Disponible en",
     languages: ["Francés", "Inglés", "Español"],
   },
@@ -171,6 +172,7 @@ export const es: Dictionary = {
   common: {
     close: "Cerrar",
     discover: "Descubrir",
+    visit: "Ver el proyecto",
     backHome: "Volver al inicio",
   },
 };

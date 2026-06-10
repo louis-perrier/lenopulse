@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Dictionary } from "@/lib/i18n/types";
 import Reveal from "./Reveal";
 
@@ -8,12 +9,14 @@ export default function About({ dict }: { dict: Dictionary }) {
     <section id="about" className="relative border-t border-border/60 bg-surface/40">
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 sm:py-32 lg:grid-cols-2">
         <Reveal>
-          {/* Placeholder de portrait. A remplacer par une vraie photo de Louis. */}
-          <div className="card-hairline relative mx-auto aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-border bg-linear-to-br from-[#221a09] to-[#0b0a07]">
-            <div className="grain" />
-            <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none font-display text-7xl font-bold text-gradient-gold">
-              L
-            </span>
+          <div className="card-hairline relative mx-auto aspect-square w-full max-w-sm overflow-hidden rounded-3xl border border-border">
+            <Image
+              src="/louis.png"
+              alt={a.photoAlt}
+              fill
+              sizes="24rem"
+              className="object-cover"
+            />
             <span className="absolute inset-0 ring-1 ring-inset ring-primary/10" />
           </div>
         </Reveal>

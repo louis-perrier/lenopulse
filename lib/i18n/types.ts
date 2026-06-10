@@ -71,6 +71,7 @@ export interface WorkDict {
 export interface AboutDict {
   title: string;
   body: string;
+  photoAlt: string;
   languagesLabel: string;
   languages: string[];
 }
@@ -104,6 +105,7 @@ export interface FooterDict {
 export interface CommonDict {
   close: string;
   discover: string;
+  visit: string;
   backHome: string;
 }
 

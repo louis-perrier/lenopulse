@@ -53,7 +53,7 @@ export async function onRequestGet(context: RequestContext): Promise<Response> {
   const leads = await sbSelect(
     env,
     "sessions",
-    "brief_ready=eq.true&status=neq.booked&select=id,created_at,updated_at,brief,locale,status&order=updated_at.desc"
+    "brief_ready=eq.true&status=neq.booked&select=id,created_at,updated_at,brief,visitor_email,locale,status&order=updated_at.desc"
   );
 
   return json({ ok: true, bookings, leads }, 200);

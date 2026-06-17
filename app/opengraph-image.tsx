@@ -7,6 +7,9 @@ import { ImageResponse } from "next/og";
 export const alt = "LENOPULSE. Sites, applications et IA qui travaillent pour vous";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+// Obligatoire avec output: export. Genere l'image au build au lieu d'une route
+// dynamique (meme contrainte que app/robots.ts et app/sitemap.ts).
+export const dynamic = "force-static";
 
 export default function OpengraphImage() {
   return new ImageResponse(

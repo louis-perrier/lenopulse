@@ -1,6 +1,6 @@
-# LOUAI
+# LENOPULSE
 
-Site vitrine de Louis (marque LOUAI). Sites, applications, automatisation, agents vocaux
+Site vitrine de Louis (marque LENOPULSE). Sites, applications, automatisation, agents vocaux
 et IA. Trilingue FR / EN / ES. Next.js + Tailwind CSS, export statique pour Cloudflare Pages.
 
 ## Demarrage

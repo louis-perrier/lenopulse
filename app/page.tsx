@@ -16,7 +16,7 @@ export default function RootRedirect() {
     <main className="flex min-h-screen items-center justify-center bg-background">
       <div className="text-center">
         <span className="font-display text-3xl tracking-tight text-gradient-gold">
-          LOUAI
+          LENOPULSE
         </span>
         <p className="mt-3 text-sm text-ink-soft">Chargement.</p>
         <noscript>

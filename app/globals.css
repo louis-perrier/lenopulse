@@ -52,6 +52,13 @@
   button {
     -webkit-tap-highlight-color: transparent;
   }
+
+  /* Anneau de focus clavier visible. La couleur suit le token local, donc le
+     focus reste lisible aussi sur les sections claires (.section-light). */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
 }
 
 /* Titre en degrade or. */
@@ -112,6 +119,47 @@
   z-index: -1;
 }
 .card-hairline:hover::after {
+  opacity: 1;
+}
+
+/* Section en rupture claire. Redefinit localement les tokens de couleur : tous
+   les utilitaires (text-ink, bg-surface, border-border, degrade or...) presents
+   dans les composants enfants basculent automatiquement en version claire. */
+.section-light {
+  --color-background: #efe7d6;
+  --color-surface: #f7f1e6;
+  --color-surface-raised: #fffdf8;
+  --color-border: #ddd0b8;
+  --color-border-strong: #c9b487;
+  --color-ink: #1f160b;
+  --color-ink-soft: #6c5d46;
+  --color-ink-faint: #9c8b6f;
+  --color-primary: #a8761f;
+  --color-primary-hover: #8a5f16;
+  --color-accent: #c2922f;
+  background-color: var(--color-background);
+  color: var(--color-ink);
+  border-top: 1px solid rgba(212, 168, 71, 0.45);
+}
+
+/* Lueur doree qui suit le curseur (cartes Expertise et Realisations). La position
+   est alimentee par --mx / --my (voir lib/spotlight.ts). z-index -1 : sous le
+   contenu mais au-dessus du fond de la carte (card-hairline isole le contexte). */
+.spotlight-layer {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    14rem 14rem at var(--mx, 50%) var(--my, 50%),
+    rgba(240, 200, 102, 0.16),
+    transparent 65%
+  );
+}
+.card-hairline:hover .spotlight-layer {
   opacity: 1;
 }
 

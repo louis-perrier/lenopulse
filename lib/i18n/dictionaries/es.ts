@@ -2,7 +2,7 @@ import type { Dictionary } from "../types";
 
 export const es: Dictionary = {
   meta: {
-    title: "LOUAI. Webs, aplicaciones e IA que trabajan para ti",
+    title: "LENOPULSE. Webs, aplicaciones e IA que trabajan para ti",
     description:
       "Creo webs, aplicaciones y agentes de IA que captan la atención, califican a tus prospectos y trabajan para ti, día y noche.",
   },
@@ -139,9 +139,9 @@ export const es: Dictionary = {
     ],
   },
   about: {
-    title: "Detrás de LOUAI, un solo interlocutor",
+    title: "Detrás de LENOPULSE, un solo interlocutor",
     body: "Yo, Louis. Sin agencia, sin intermediarios. Hablas directamente con la persona que diseña y construye. Trabajo con mis clientes en tres idiomas, para estar cerca estés donde estés.",
-    photoAlt: "Louis, el rostro detrás de LOUAI",
+    photoAlt: "Louis, el rostro detrás de LENOPULSE",
     languagesLabel: "Disponible en",
     languages: ["Francés", "Inglés", "Español"],
   },
@@ -159,9 +159,52 @@ export const es: Dictionary = {
     emailLabel: "Tu email",
     messageLabel: "Tu proyecto en pocas palabras",
     submit: "Enviar",
+    sending: "Enviando...",
+    success: "Mensaje enviado. Te respondo en 24h.",
+    error: "El envío falló. Abriendo tu cliente de correo...",
     socialsLabel: "O encuéntrame en",
     note: "Respuesta en 24h. Sin compromiso.",
-    mailtoSubject: "Nuevo proyecto desde la web de LOUAI",
+    mailtoSubject: "Nuevo proyecto desde la web de LENOPULSE",
+  },
+  assistant: {
+    kicker: "Asistente IA",
+    title: "Describe tu proyecto, yo lo aclaro",
+    subtitle:
+      "Una idea precisa o un simple boceto. En pocas preguntas lo convertimos en un brief claro.",
+    greeting:
+      "Hola. Cuéntame tu proyecto, aunque sea solo una idea. Te haré algunas preguntas para encuadrarlo juntos.",
+    starters: ["Ya tengo un proyecto en mente", "Solo tengo una idea por explorar"],
+    inputPlaceholder: "Escribe tu mensaje...",
+    send: "Enviar",
+    thinking: "El asistente está pensando...",
+    restart: "Empezar de nuevo",
+    error: "Ha ocurrido un error. Inténtalo de nuevo o usa el formulario de contacto de abajo.",
+    unavailable:
+      "El asistente no está disponible ahora mismo. Cuéntame tu proyecto mediante el formulario de contacto de abajo, te respondo personalmente.",
+    briefTitle: "Tu brief",
+    briefIntro: "Aquí tienes la síntesis de tu proyecto. Reserva una llamada para hablarlo en persona.",
+    briefCta: "Reservar una llamada",
+    briefFields: {
+      problem: "Problema",
+      target: "Público",
+      scope: "Solución prevista",
+      budget: "Presupuesto",
+      timeline: "Plazo",
+      nextStep: "Siguiente paso",
+    },
+    disclaimer:
+      "Asistente IA. Este intercambio ayuda a encuadrar tu proyecto antes de una posible llamada.",
+  },
+  booking: {
+    kicker: "Reservar una llamada",
+    title: "Elige un horario",
+    subtitle: "Una llamada para hablar de tu proyecto y ver cómo avanzar juntos.",
+    lockedTitle: "Primero encuadremos tu proyecto",
+    lockedText:
+      "La reserva se abre una vez que tu proyecto esté encuadrado con el asistente de arriba.",
+    unavailable:
+      "La reserva en línea llega pronto. Mientras tanto, escríbeme mediante el formulario de contacto de abajo.",
+    booked: "Reservado. Recibirás un email de confirmación. Hasta pronto.",
   },
   footer: {
     tagline: "Webs, aplicaciones e IA que trabajan para ti.",

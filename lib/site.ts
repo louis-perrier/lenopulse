@@ -1,7 +1,7 @@
 // Coordonnees et liens du site.
 
 export const siteConfig = {
-  brand: "LOUAI",
+  brand: "LENOPULSE",
 
   // Adresse qui recoit les messages du formulaire de contact (mailto).
   contactEmail: "louis.perrier.chenoise@gmail.com",

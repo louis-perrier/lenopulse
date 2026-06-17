@@ -90,9 +90,50 @@ export interface ContactDict {
   emailLabel: string;
   messageLabel: string;
   submit: string;
+  sending: string;
+  success: string;
+  error: string;
   socialsLabel: string;
   note: string;
   mailtoSubject: string;
+}
+
+export interface AssistantBriefFields {
+  problem: string;
+  target: string;
+  scope: string;
+  budget: string;
+  timeline: string;
+  nextStep: string;
+}
+
+export interface AssistantDict {
+  kicker: string;
+  title: string;
+  subtitle: string;
+  greeting: string;
+  starters: string[];
+  inputPlaceholder: string;
+  send: string;
+  thinking: string;
+  restart: string;
+  error: string;
+  unavailable: string;
+  briefTitle: string;
+  briefIntro: string;
+  briefCta: string;
+  briefFields: AssistantBriefFields;
+  disclaimer: string;
+}
+
+export interface BookingDict {
+  kicker: string;
+  title: string;
+  subtitle: string;
+  lockedTitle: string;
+  lockedText: string;
+  unavailable: string;
+  booked: string;
 }
 
 export interface FooterDict {
@@ -120,6 +161,8 @@ export interface Dictionary {
   about: AboutDict;
   finalCta: FinalCtaDict;
   contact: ContactDict;
+  assistant: AssistantDict;
+  booking: BookingDict;
   footer: FooterDict;
   common: CommonDict;
 }

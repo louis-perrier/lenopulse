@@ -34,6 +34,13 @@ export async function generateMetadata({
       description: dict.meta.description,
       type: "website",
     },
+    // L'image de partage est fournie par app/opengraph-image.tsx (convention de
+    // fichier), reprise ici pour og:image et twitter:image.
+    twitter: {
+      card: "summary_large_image",
+      title: dict.meta.title,
+      description: dict.meta.description,
+    },
   };
 }
 

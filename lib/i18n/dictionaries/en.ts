@@ -2,7 +2,7 @@ import type { Dictionary } from "../types";
 
 export const en: Dictionary = {
   meta: {
-    title: "LOUAI. Websites, apps and AI that work for you",
+    title: "LENOPULSE. Websites, apps and AI that work for you",
     description:
       "I build websites, applications and AI agents that capture attention, qualify your leads and work for you, day and night.",
   },
@@ -139,9 +139,9 @@ export const en: Dictionary = {
     ],
   },
   about: {
-    title: "Behind LOUAI, a single point of contact",
+    title: "Behind LENOPULSE, a single point of contact",
     body: "Me, Louis. No agency, no middleman. You talk directly to the person who designs and builds. I work with my clients in three languages, to stay close wherever you are.",
-    photoAlt: "Louis, the face behind LOUAI",
+    photoAlt: "Louis, the face behind LENOPULSE",
     languagesLabel: "Available in",
     languages: ["French", "English", "Spanish"],
   },
@@ -159,9 +159,51 @@ export const en: Dictionary = {
     emailLabel: "Your email",
     messageLabel: "Your project in a few words",
     submit: "Send",
+    sending: "Sending...",
+    success: "Message sent. I'll reply within 24h.",
+    error: "Sending failed. Opening your email client...",
     socialsLabel: "Or find me on",
     note: "Reply within 24h. No commitment.",
-    mailtoSubject: "New project via the LOUAI website",
+    mailtoSubject: "New project via the LENOPULSE website",
+  },
+  assistant: {
+    kicker: "AI assistant",
+    title: "Describe your project, I'll make it clear",
+    subtitle:
+      "A precise idea or a rough sketch. In a few questions, we turn it into a clear brief.",
+    greeting:
+      "Hello. Tell me about your project, even just an idea. I'll ask a few questions to scope it with you.",
+    starters: ["I already have a project in mind", "I just have an idea to explore"],
+    inputPlaceholder: "Type your message...",
+    send: "Send",
+    thinking: "The assistant is thinking...",
+    restart: "Start over",
+    error: "Something went wrong. Try again, or use the contact form below.",
+    unavailable:
+      "The assistant is not available right now. Tell me about your project through the contact form below, I'll reply to you personally.",
+    briefTitle: "Your brief",
+    briefIntro: "Here is the summary of your project. Book a call to talk it through.",
+    briefCta: "Book a call",
+    briefFields: {
+      problem: "Problem",
+      target: "Target",
+      scope: "Envisioned solution",
+      budget: "Budget",
+      timeline: "Timeline",
+      nextStep: "Next step",
+    },
+    disclaimer:
+      "AI assistant. This exchange helps scope your project before any call.",
+  },
+  booking: {
+    kicker: "Book a call",
+    title: "Pick a time slot",
+    subtitle: "A call to talk about your project and see how we can move forward together.",
+    lockedTitle: "Let's scope your project first",
+    lockedText: "Booking opens once your project is scoped with the assistant above.",
+    unavailable:
+      "Online booking is coming soon. In the meantime, write to me through the contact form below.",
+    booked: "You're booked. You'll receive a confirmation email. See you soon.",
   },
   footer: {
     tagline: "Websites, applications and AI that work for you.",

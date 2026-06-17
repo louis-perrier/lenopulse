@@ -1,0 +1,30 @@
+# Exemple de variables d'environnement pour le test local des fonctions Cloudflare
+# avec `npx wrangler pages dev out`. Copier ce fichier en `.dev.vars` (gitignore) et
+# remplir les valeurs. En `npm run dev` (front seul), ce fichier n'est pas utilise :
+# les fonctions sont absentes et l'app bascule sur ses replis (formulaire de contact).
+#
+# Les memes variables se definissent dans Cloudflare Pages (Settings > Environment
+# variables) pour la production et les previews.
+#
+# NE JAMAIS mettre de vraie valeur secrete ici : ce fichier est un modele destine a
+# etre partage. Les vraies valeurs vont dans .dev.vars (gitignore) ou dans Cloudflare.
+
+# Assistant IA (obligatoire pour tester le chat)
+ANTHROPIC_API_KEY=
+
+# Persistance Supabase (optionnel ; sans, l'assistant repond mais ne memorise rien)
+# SUPABASE_URL = URL d'API du projet (https://<ref>.supabase.co), PAS l'URL du dashboard.
+SUPABASE_URL=https://fcpgjrskvpvbalhoktfn.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=
+
+# Envoi d'emails (formulaire de contact, notification de RDV, relances)
+RESEND_API_KEY=
+CONTACT_FROM=LENOPULSE <contact@lenopulse.com>
+CONTACT_TO=louis.perrier.chenoise@gmail.com
+
+# Webhook de reservation Cal.com
+CAL_WEBHOOK_SECRET=
+
+# Vue admin
+ADMIN_PASSWORD=
+ADMIN_TOKEN_SECRET=

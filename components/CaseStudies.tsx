@@ -3,8 +3,10 @@
 import { useState } from "react";
 import type { Dictionary, WorkItem } from "@/lib/i18n/types";
 import Reveal from "./Reveal";
+import RevealTitle from "./RevealTitle";
 import CaseVisual from "./CaseVisual";
 import CaseStudyModal from "./CaseStudyModal";
+import { trackSpotlight } from "@/lib/spotlight";
 import { IconArrow } from "./Icons";
 
 export default function CaseStudies({ dict }: { dict: Dictionary }) {
@@ -16,21 +18,25 @@ export default function CaseStudies({ dict }: { dict: Dictionary }) {
   return (
     <section id="work" className="relative border-t border-border/60">
       <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
-        <Reveal className="max-w-2xl">
+        <div className="max-w-2xl">
           <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
-            {w.title}
+            <RevealTitle>{w.title}</RevealTitle>
           </h2>
-          <p className="mt-4 text-lg text-ink-soft">{w.subtitle}</p>
-        </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-4 text-lg text-ink-soft">{w.subtitle}</p>
+          </Reveal>
+        </div>
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {w.items.map((item, i) => (
-            <Reveal key={item.id} delay={(i % 3) * 0.07}>
+            <Reveal key={item.id} delay={(i % 3) * 0.07} direction="scale">
               <button
                 type="button"
                 onClick={() => setSelected({ item, index: i })}
-                className="card-hairline group block h-full w-full overflow-hidden rounded-2xl border border-border bg-surface text-left transition-colors hover:border-border-strong"
+                onPointerMove={trackSpotlight}
+                className="card-hairline group block h-full w-full overflow-hidden rounded-2xl border border-border bg-surface text-left transition duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-[0_18px_50px_-24px_rgba(212,168,71,0.45)]"
               >
+                <span aria-hidden className="spotlight-layer" />
                 <CaseVisual item={item} index={i} className="h-40 w-full" />
                 <div className="p-5">
                   <h3 className="text-lg font-semibold text-ink">{item.name}</h3>

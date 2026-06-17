@@ -2,7 +2,7 @@ import type { Dictionary } from "../types";
 
 export const fr: Dictionary = {
   meta: {
-    title: "LOUAI. Sites, applications et IA qui travaillent pour vous",
+    title: "LENOPULSE. Sites, applications et IA qui travaillent pour vous",
     description:
       "Je conçois des sites, des applications et des agents IA qui captent l'attention, qualifient vos prospects et travaillent pour vous, jour et nuit.",
   },
@@ -140,9 +140,9 @@ export const fr: Dictionary = {
     ],
   },
   about: {
-    title: "Derrière LOUAI, un seul interlocuteur",
+    title: "Derrière LENOPULSE, un seul interlocuteur",
     body: "Moi, Louis. Pas une agence, pas d'intermédiaire. Vous parlez directement à la personne qui conçoit et qui construit. Je travaille avec mes clients dans trois langues, pour rester proche où que vous soyez.",
-    photoAlt: "Louis, le visage derrière LOUAI",
+    photoAlt: "Louis, le visage derrière LENOPULSE",
     languagesLabel: "Disponible en",
     languages: ["Français", "Anglais", "Espagnol"],
   },
@@ -160,9 +160,53 @@ export const fr: Dictionary = {
     emailLabel: "Votre email",
     messageLabel: "Votre projet en quelques mots",
     submit: "Envoyer",
+    sending: "Envoi en cours...",
+    success: "Message bien envoyé. Je vous réponds sous 24h.",
+    error: "L'envoi a échoué. Ouverture de votre messagerie...",
     socialsLabel: "Ou retrouvez-moi sur",
     note: "Réponse sous 24h. Sans engagement.",
-    mailtoSubject: "Nouveau projet via le site LOUAI",
+    mailtoSubject: "Nouveau projet via le site LENOPULSE",
+  },
+  assistant: {
+    kicker: "Assistant IA",
+    title: "Décrivez votre projet, je le mets au clair",
+    subtitle:
+      "Une idée précise ou une simple ébauche. En quelques questions, on transforme ça en un brief clair.",
+    greeting:
+      "Bonjour. Parlez-moi de votre projet, même une simple idée. Je vous pose quelques questions pour le cadrer ensemble.",
+    starters: ["J'ai déjà un projet en tête", "J'ai juste une idée à creuser"],
+    inputPlaceholder: "Écrivez votre message...",
+    send: "Envoyer",
+    thinking: "L'assistant réfléchit...",
+    restart: "Recommencer",
+    error: "Une erreur est survenue. Réessayez, ou utilisez le formulaire de contact ci-dessous.",
+    unavailable:
+      "L'assistant n'est pas disponible pour le moment. Décrivez-moi votre projet via le formulaire de contact ci-dessous, je vous réponds personnellement.",
+    briefTitle: "Votre brief",
+    briefIntro: "Voici la synthèse de votre projet. Réservez un appel pour en parler de vive voix.",
+    briefCta: "Réserver un appel",
+    briefFields: {
+      problem: "Problème",
+      target: "Cible",
+      scope: "Solution envisagée",
+      budget: "Budget",
+      timeline: "Délai",
+      nextStep: "Prochaine étape",
+    },
+    disclaimer:
+      "Assistant IA. Cet échange aide à cadrer votre projet avant un éventuel appel.",
+  },
+  booking: {
+    kicker: "Réserver un appel",
+    title: "Choisissez un créneau",
+    subtitle: "Un appel pour parler de votre projet et voir comment avancer ensemble.",
+    lockedTitle: "Cadrons d'abord votre projet",
+    lockedText:
+      "La réservation s'ouvre une fois votre projet cadré avec l'assistant ci-dessus.",
+    unavailable:
+      "La réservation en ligne arrive bientôt. En attendant, écrivez-moi via le formulaire de contact ci-dessous.",
+    booked:
+      "C'est réservé. Vous allez recevoir un email de confirmation. À très vite.",
   },
   footer: {
     tagline: "Sites, applications et IA qui travaillent pour vous.",

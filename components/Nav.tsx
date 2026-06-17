@@ -48,7 +48,7 @@ export default function Nav({ lang, dict }: NavProps) {
           href={`/${lang}/`}
           className="font-display text-xl font-semibold tracking-tight text-ink"
         >
-          LOU<span className="text-gradient-gold">AI</span>
+          LENO<span className="text-gradient-gold">PULSE</span>
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">

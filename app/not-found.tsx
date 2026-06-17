@@ -9,7 +9,7 @@ export default function NotFound() {
         href="/fr/"
         className="mt-8 inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-background transition-colors hover:bg-primary-hover"
       >
-        LOUAI
+        LENOPULSE
       </Link>
     </main>
   );

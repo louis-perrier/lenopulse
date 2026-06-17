@@ -1,8 +1,11 @@
 import type { Locale } from "./i18n/types";
 
 // Contenu legal reel (mentions legales et politique de confidentialite RGPD).
-// Editeur : Louis Perrier, micro-entreprise, Nantes. Site statique : aucun cookie,
-// aucun traceur, aucune donnee stockee (formulaire en mailto).
+// Editeur : Louis Perrier, micro-entreprise, Nantes. Site statique, sans cookie
+// publicitaire ni traceur tiers. Trois traitements : formulaire de contact (fonction
+// Cloudflare + Resend, repli mailto), assistant IA (Anthropic pour les reponses,
+// Supabase pour la memoire des conversations) et reservation d'appel (Cal.com), les
+// donnees de RDV etant aussi conservees dans Supabase (hebergement UE).
 
 export interface LegalBlock {
   heading: string;
@@ -26,7 +29,7 @@ export const legalContent: Record<Locale, LegalSet> = {
       blocks: [
         {
           heading: "Éditeur du site",
-          body: "Le site LOUAI est édité par Louis Perrier, entrepreneur individuel (micro-entreprise), SIREN 940 796 253, domicilié 7 allée Jean-Baptiste Fourier, 44300 Nantes, France. TVA non applicable, article 293 B du CGI.",
+          body: "Le site LENOPULSE est édité par Louis Perrier, entrepreneur individuel (micro-entreprise), SIREN 940 796 253, domicilié 7 allée Jean-Baptiste Fourier, 44300 Nantes, France. TVA non applicable, article 293 B du CGI.",
         },
         {
           heading: "Directeur de la publication",
@@ -49,7 +52,7 @@ export const legalContent: Record<Locale, LegalSet> = {
     },
     privacy: {
       title: "Politique de confidentialité",
-      note: "Dernière mise à jour : 10 juin 2026.",
+      note: "Dernière mise à jour : 17 juin 2026.",
       blocks: [
         {
           heading: "Responsable du traitement",
@@ -57,15 +60,15 @@ export const legalContent: Record<Locale, LegalSet> = {
         },
         {
           heading: "Données collectées",
-          body: "Ce site ne dépose aucun cookie, n'utilise aucun outil de mesure d'audience et ne stocke aucune donnée personnelle. Le formulaire de contact ouvre votre logiciel de messagerie : les informations saisies (prénom, email, message) ne sont transmises que lorsque vous envoyez l'email, et ne transitent par aucun serveur du site.",
+          body: "Ce site ne dépose aucun cookie publicitaire et n'utilise aucun traceur tiers. Trois cas. (1) Formulaire de contact : les informations saisies (prénom, email, message) sont transmises via une fonction sécurisée hébergée chez Cloudflare, puis acheminées jusqu'à ma boîte email par Resend (resend.com), sous-traitant. Si l'envoi échoue, votre logiciel de messagerie s'ouvre en secours. (2) Assistant IA : votre conversation et la synthèse de projet sont traitées par Anthropic (anthropic.com) pour générer les réponses, et conservées dans une base de données Supabase (supabase.com, hébergement dans l'Union européenne) afin de garder le fil de l'échange. Une mémoire locale de votre navigateur conserve aussi la conversation pour ne pas vous la faire ressaisir (stockage strictement fonctionnel). Une empreinte technique anonymisée (adresse IP hachée) peut être conservée à des fins de sécurité. (3) Réservation d'appel : la prise de rendez-vous est gérée par Cal.com (cal.com), et les informations du rendez-vous (nom, email, créneau, lien de visioconférence) sont conservées dans Supabase. Aucune donnée n'est revendue.",
         },
         {
           heading: "Finalité",
-          body: "Les informations reçues par email servent uniquement à répondre à votre demande et à assurer le suivi de nos échanges. Elles ne sont ni revendues, ni partagées, ni utilisées pour de la prospection non sollicitée.",
+          body: "Les informations servent uniquement à répondre à votre demande, à cadrer votre projet, à organiser un éventuel rendez-vous et à assurer le suivi de nos échanges. Elles ne sont ni revendues, ni partagées, ni utilisées pour de la prospection non sollicitée.",
         },
         {
           heading: "Durée de conservation",
-          body: "Les échanges sont conservés au maximum 3 ans après le dernier contact, puis supprimés.",
+          body: "Les échanges par email, les conversations avec l'assistant et les rendez-vous sont conservés au maximum 3 ans après le dernier contact, puis supprimés.",
         },
         {
           heading: "Hébergement et journaux techniques",
@@ -86,7 +89,7 @@ export const legalContent: Record<Locale, LegalSet> = {
       blocks: [
         {
           heading: "Publisher",
-          body: "The LOUAI website is published by Louis Perrier, sole trader (French micro-entreprise), SIREN 940 796 253, located at 7 allée Jean-Baptiste Fourier, 44300 Nantes, France. VAT not applicable, article 293 B of the French Tax Code.",
+          body: "The LENOPULSE website is published by Louis Perrier, sole trader (French micro-entreprise), SIREN 940 796 253, located at 7 allée Jean-Baptiste Fourier, 44300 Nantes, France. VAT not applicable, article 293 B of the French Tax Code.",
         },
         {
           heading: "Publication director",
@@ -109,7 +112,7 @@ export const legalContent: Record<Locale, LegalSet> = {
     },
     privacy: {
       title: "Privacy policy",
-      note: "Last updated: June 10, 2026.",
+      note: "Last updated: June 17, 2026.",
       blocks: [
         {
           heading: "Data controller",
@@ -117,15 +120,15 @@ export const legalContent: Record<Locale, LegalSet> = {
         },
         {
           heading: "Data collected",
-          body: "This website sets no cookies, uses no analytics tools and stores no personal data. The contact form opens your email client: the information you enter (first name, email, message) is only transmitted when you send the email, and never passes through any server of this website.",
+          body: "This website sets no advertising cookies and uses no third-party trackers. Three cases. (1) Contact form: the information you enter (first name, email, message) is sent through a secure function hosted by Cloudflare, then delivered to my inbox by Resend (resend.com), a sub-processor. If sending fails, your email client opens as a fallback. (2) AI assistant: your conversation and project summary are processed by Anthropic (anthropic.com) to generate replies, and stored in a Supabase database (supabase.com, hosted in the European Union) to keep track of the exchange. Your browser's local storage also keeps the conversation so you do not have to retype it (strictly functional storage). An anonymized technical fingerprint (hashed IP address) may be kept for security. (3) Call booking: scheduling is handled by Cal.com (cal.com), and the appointment details (name, email, time slot, video call link) are stored in Supabase. No data is ever sold.",
         },
         {
           heading: "Purpose",
-          body: "The information received by email is used solely to answer your request and follow up on our exchanges. It is never sold, shared or used for unsolicited marketing.",
+          body: "The information is used solely to answer your request, scope your project, arrange a possible appointment and follow up on our exchanges. It is never sold, shared or used for unsolicited marketing.",
         },
         {
           heading: "Retention period",
-          body: "Exchanges are kept for a maximum of 3 years after the last contact, then deleted.",
+          body: "Email exchanges, conversations with the assistant and appointments are kept for a maximum of 3 years after the last contact, then deleted.",
         },
         {
           heading: "Hosting and technical logs",
@@ -146,7 +149,7 @@ export const legalContent: Record<Locale, LegalSet> = {
       blocks: [
         {
           heading: "Editor del sitio",
-          body: "El sitio LOUAI está editado por Louis Perrier, empresario individual (micro-entreprise francesa), SIREN 940 796 253, con domicilio en 7 allée Jean-Baptiste Fourier, 44300 Nantes, Francia. IVA no aplicable, artículo 293 B del Código Tributario francés.",
+          body: "El sitio LENOPULSE está editado por Louis Perrier, empresario individual (micro-entreprise francesa), SIREN 940 796 253, con domicilio en 7 allée Jean-Baptiste Fourier, 44300 Nantes, Francia. IVA no aplicable, artículo 293 B del Código Tributario francés.",
         },
         {
           heading: "Director de la publicación",
@@ -169,7 +172,7 @@ export const legalContent: Record<Locale, LegalSet> = {
     },
     privacy: {
       title: "Política de privacidad",
-      note: "Última actualización: 10 de junio de 2026.",
+      note: "Última actualización: 17 de junio de 2026.",
       blocks: [
         {
           heading: "Responsable del tratamiento",
@@ -177,15 +180,15 @@ export const legalContent: Record<Locale, LegalSet> = {
         },
         {
           heading: "Datos recogidos",
-          body: "Este sitio no instala cookies, no utiliza herramientas de analítica y no almacena ningún dato personal. El formulario de contacto abre tu cliente de correo: la información introducida (nombre, email, mensaje) solo se transmite cuando envías el email, y no pasa por ningún servidor de este sitio.",
+          body: "Este sitio no instala cookies publicitarias ni utiliza rastreadores de terceros. Tres casos. (1) Formulario de contacto: la información introducida (nombre, email, mensaje) se transmite a través de una función segura alojada en Cloudflare y luego se entrega a mi bandeja de entrada mediante Resend (resend.com), subencargado del tratamiento. Si el envío falla, tu cliente de correo se abre como alternativa. (2) Asistente IA: tu conversación y la síntesis del proyecto se procesan con Anthropic (anthropic.com) para generar las respuestas, y se conservan en una base de datos Supabase (supabase.com, alojamiento en la Unión Europea) para mantener el hilo del intercambio. La memoria local de tu navegador también guarda la conversación para no tener que reescribirla (almacenamiento estrictamente funcional). Puede conservarse una huella técnica anonimizada (dirección IP cifrada) con fines de seguridad. (3) Reserva de llamada: la programación la gestiona Cal.com (cal.com), y los datos de la cita (nombre, email, horario, enlace de videollamada) se conservan en Supabase. Ningún dato se vende.",
         },
         {
           heading: "Finalidad",
-          body: "La información recibida por email se utiliza únicamente para responder a tu solicitud y dar seguimiento a nuestros intercambios. Nunca se vende, se comparte ni se usa para prospección no solicitada.",
+          body: "La información se utiliza únicamente para responder a tu solicitud, encuadrar tu proyecto, organizar una posible cita y dar seguimiento a nuestros intercambios. Nunca se vende, se comparte ni se usa para prospección no solicitada.",
         },
         {
           heading: "Plazo de conservación",
-          body: "Los intercambios se conservan un máximo de 3 años tras el último contacto y después se eliminan.",
+          body: "Los intercambios por email, las conversaciones con el asistente y las citas se conservan un máximo de 3 años tras el último contacto y después se eliminan.",
         },
         {
           heading: "Alojamiento y registros técnicos",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Fraunces } from "next/font/google";
+import Motion from "@/components/Motion";
 import "./globals.css";
 
 const inter = Inter({
@@ -16,9 +17,9 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "LOUAI",
+  title: "LENOPULSE",
   description: "Sites, applications et IA qui travaillent pour vous.",
-  metadataBase: new URL("https://louai.fr"),
+  metadataBase: new URL("https://lenopulse.com"),
 };
 
 export default function RootLayout({
@@ -28,7 +29,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={`${inter.variable} ${fraunces.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Motion>{children}</Motion>
+      </body>
     </html>
   );
 }

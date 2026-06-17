@@ -11,7 +11,7 @@ export default function Footer({ lang, dict }: { lang: string; dict: Dictionary 
             href={`/${lang}/`}
             className="font-display text-xl font-semibold tracking-tight text-ink"
           >
-            LOU<span className="text-gradient-gold">AI</span>
+            LENO<span className="text-gradient-gold">PULSE</span>
           </a>
           <p className="mt-2 max-w-xs text-sm text-ink-soft">{dict.footer.tagline}</p>
         </div>
@@ -34,7 +34,7 @@ export default function Footer({ lang, dict }: { lang: string; dict: Dictionary 
 
       <div className="border-t border-border/40">
         <p className="mx-auto max-w-6xl px-6 py-5 text-xs text-ink-faint">
-          {year} LOUAI. {dict.footer.rights}
+          {year} LENOPULSE. {dict.footer.rights}
         </p>
       </div>
     </footer>

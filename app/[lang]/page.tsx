@@ -13,6 +13,7 @@ import Assistant from "@/components/Assistant";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ContactLauncher from "@/components/ContactLauncher";
+import AssistantChatProvider from "@/components/AssistantChatProvider";
 
 export default async function Page({
   params,
@@ -52,20 +53,22 @@ export default async function Page({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Nav lang={lang} dict={dict} />
-      <main>
-        <Hero dict={dict} />
-        <Problem dict={dict} />
-        <Skills dict={dict} />
-        <Process dict={dict} />
-        <CaseStudies dict={dict} />
-        <About dict={dict} />
-        <FinalCta dict={dict} />
-        <Assistant lang={lang} dict={dict} />
-        <Contact dict={dict} />
-      </main>
-      <Footer lang={lang} dict={dict} />
-      <ContactLauncher dict={dict} />
+      <AssistantChatProvider lang={lang}>
+        <Nav lang={lang} dict={dict} />
+        <main>
+          <Hero dict={dict} />
+          <Problem dict={dict} />
+          <Skills dict={dict} />
+          <Process dict={dict} />
+          <CaseStudies dict={dict} />
+          <About dict={dict} />
+          <FinalCta dict={dict} />
+          <Assistant dict={dict} />
+          <Contact dict={dict} />
+        </main>
+        <Footer lang={lang} dict={dict} />
+        <ContactLauncher dict={dict} />
+      </AssistantChatProvider>
     </>
   );
 }

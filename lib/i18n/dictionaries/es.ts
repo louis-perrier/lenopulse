@@ -219,9 +219,7 @@ export const es: Dictionary = {
     backHome: "Volver al inicio",
   },
   launcher: {
-    open: "Abrir el menú de contacto",
-    title: "¿Por dónde empezar?",
-    chat: "Hablar con el asistente",
+    open: "Abrir el asistente",
     email: "Escribir un correo",
     booking: "Reservar una llamada",
   },

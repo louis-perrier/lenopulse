@@ -2,15 +2,20 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Dictionary } from "@/lib/i18n/types";
-import { IconChat, IconMail, IconCalendar, IconClose } from "./Icons";
+import { useAssistantChat } from "./AssistantChatProvider";
+import ChatThread from "./ChatThread";
+import ChatComposer from "./ChatComposer";
+import { IconChat, IconMail, IconCalendar, IconClose, IconCheck } from "./Icons";
 
-// Bulle de contact flottante. Raccourci unique vers les trois voies de contact
-// (assistant IA, formulaire mail, reservation), qui vivent plus bas en sections.
-// Elle ne duplique aucune logique : chaque entree fait simplement defiler vers la
-// section concernee. Remplace l'ancienne MobileCtaBar (un seul element flottant,
-// bureau et mobile). Apparait apres un debut de scroll pour ne pas masquer le hero.
+// Bulle de contact flottante, desormais interactive. Le panneau ouvre directement le
+// mini-chat de l'assistant IA, qui partage sa conversation avec la section assistant
+// via AssistantChatProvider (meme session, meme deverrouillage de reservation). Le mail
+// et la reservation restent de simples raccourcis vers leurs sections. Remplace
+// l'ancienne MobileCtaBar. Apparait apres un debut de scroll pour ne pas masquer le hero.
 export default function ContactLauncher({ dict }: { dict: Dictionary }) {
   const l = dict.launcher;
+  const a = dict.assistant;
+  const { messages, loading, error, briefReady, send } = useAssistantChat();
   const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -42,11 +47,7 @@ export default function ContactLauncher({ dict }: { dict: Dictionary }) {
     };
   }, [open]);
 
-  const items = [
-    { href: "#assistant", label: l.chat, Icon: IconChat },
-    { href: "#contact", label: l.email, Icon: IconMail },
-    { href: "#booking", label: l.booking, Icon: IconCalendar },
-  ];
+  const close = () => setOpen(false);
 
   return (
     <div
@@ -57,27 +58,103 @@ export default function ContactLauncher({ dict }: { dict: Dictionary }) {
           : "pointer-events-none translate-y-4 opacity-0"
       }`}
     >
-      {/* Mini-menu des trois voies de contact */}
+      {/* Panneau de chat direct */}
       {open && (
-        <div className="w-60 overflow-hidden rounded-2xl border border-border bg-surface shadow-lg shadow-black/40">
-          <p className="border-b border-border px-4 py-3 text-xs font-medium uppercase tracking-wider text-ink-faint">
-            {l.title}
-          </p>
-          <nav className="flex flex-col p-2">
-            {items.map(({ href, label, Icon }) => (
-              <a
-                key={href}
-                href={href}
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-ink transition-colors hover:bg-surface-raised hover:text-primary"
+        <div
+          role="dialog"
+          aria-label={a.kicker}
+          className="flex w-[calc(100vw-2.5rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-lg shadow-black/40 sm:w-[22rem]"
+        >
+          {/* En-tete */}
+          <div className="flex items-center justify-between border-b border-border px-4 py-3">
+            <p className="text-sm font-semibold text-ink">{a.kicker}</p>
+            <button
+              type="button"
+              onClick={close}
+              aria-label={dict.common.close}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full text-ink-soft transition-colors hover:bg-surface-raised hover:text-primary"
+            >
+              <IconClose className="h-5 w-5" />
+            </button>
+          </div>
+
+          {/* Corps : fil, brief, suggestions, erreur, saisie */}
+          <div className="flex flex-col gap-3 p-4">
+            <ChatThread
+              messages={messages}
+              loading={loading}
+              greeting={a.greeting}
+              thinking={a.thinking}
+              className="max-h-[18rem]"
+            />
+
+            {/* Brief pret : invitation a reserver (section deverrouillee) */}
+            {briefReady && (
+              <div className="rounded-xl border border-border-strong bg-surface-raised p-4">
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-background">
+                    <IconCheck className="h-4 w-4" />
+                  </span>
+                  <p className="text-sm font-semibold text-ink">{a.briefTitle}</p>
+                </div>
+                <a
+                  href="#booking"
+                  onClick={close}
+                  className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-background transition-colors hover:bg-primary-hover"
+                >
+                  {l.booking}
+                </a>
+              </div>
+            )}
+
+            {/* Suggestions de demarrage */}
+            {messages.length === 0 && !loading && (
+              <div className="flex flex-wrap gap-2">
+                {a.starters.map((starter) => (
+                  <button
+                    key={starter}
+                    type="button"
+                    onClick={() => send(starter)}
+                    className="rounded-full border border-border bg-surface-raised px-3 py-1.5 text-xs text-ink-soft transition-colors hover:border-primary hover:text-primary"
+                  >
+                    {starter}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Message d'erreur ou de repli */}
+            {error && (
+              <p
+                aria-live="polite"
+                className="rounded-xl border border-border-strong bg-surface-raised px-4 py-3 text-sm text-primary"
               >
-                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface-raised text-primary">
-                  <Icon className="h-5 w-5" />
-                </span>
-                {label}
-              </a>
-            ))}
-          </nav>
+                {error === "unavailable" ? a.unavailable : a.error}
+              </p>
+            )}
+
+            <ChatComposer dict={dict} onSend={send} disabled={loading} />
+          </div>
+
+          {/* Pied : raccourcis mail et reservation vers leurs sections */}
+          <div className="grid grid-cols-2 gap-2 border-t border-border p-2">
+            <a
+              href="#contact"
+              onClick={close}
+              className="flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface-raised hover:text-primary"
+            >
+              <IconMail className="h-4 w-4" />
+              {l.email}
+            </a>
+            <a
+              href="#booking"
+              onClick={close}
+              className="flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface-raised hover:text-primary"
+            >
+              <IconCalendar className="h-4 w-4" />
+              {l.booking}
+            </a>
+          </div>
         </div>
       )}
 
@@ -86,7 +163,7 @@ export default function ContactLauncher({ dict }: { dict: Dictionary }) {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        aria-haspopup="true"
+        aria-haspopup="dialog"
         aria-label={open ? dict.common.close : l.open}
         className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary text-background shadow-lg shadow-black/40 transition-colors hover:bg-primary-hover"
       >

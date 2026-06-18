@@ -221,9 +221,7 @@ export const fr: Dictionary = {
     backHome: "Retour à l'accueil",
   },
   launcher: {
-    open: "Ouvrir le menu de contact",
-    title: "Par où commencer ?",
-    chat: "Discuter avec l'assistant",
+    open: "Ouvrir l'assistant",
     email: "Écrire un mail",
     booking: "Réserver un appel",
   },

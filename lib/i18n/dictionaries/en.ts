@@ -218,9 +218,7 @@ export const en: Dictionary = {
     backHome: "Back to home",
   },
   launcher: {
-    open: "Open the contact menu",
-    title: "Where to start?",
-    chat: "Chat with the assistant",
+    open: "Open the assistant",
     email: "Write an email",
     booking: "Book a call",
   },

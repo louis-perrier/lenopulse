@@ -152,8 +152,6 @@ export interface CommonDict {
 
 export interface LauncherDict {
   open: string;
-  title: string;
-  chat: string;
   email: string;
   booking: string;
 }

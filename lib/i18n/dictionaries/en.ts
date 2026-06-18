@@ -217,4 +217,11 @@ export const en: Dictionary = {
     visit: "View the project",
     backHome: "Back to home",
   },
+  launcher: {
+    open: "Open the contact menu",
+    title: "Where to start?",
+    chat: "Chat with the assistant",
+    email: "Write an email",
+    booking: "Book a call",
+  },
 };

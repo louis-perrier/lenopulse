@@ -12,7 +12,7 @@ import FinalCta from "@/components/FinalCta";
 import Assistant from "@/components/Assistant";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import MobileCtaBar from "@/components/MobileCtaBar";
+import ContactLauncher from "@/components/ContactLauncher";
 
 export default async function Page({
   params,
@@ -65,7 +65,7 @@ export default async function Page({
         <Contact dict={dict} />
       </main>
       <Footer lang={lang} dict={dict} />
-      <MobileCtaBar dict={dict} />
+      <ContactLauncher dict={dict} />
     </>
   );
 }

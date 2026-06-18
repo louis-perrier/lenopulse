@@ -132,3 +132,30 @@ export function IconLinkedin(props: IconProps) {
     </svg>
   );
 }
+
+export function IconChat(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M4 18V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H8l-4 3Z" />
+      <path d="M9 10h.01M12 10h.01M15 10h.01" />
+    </svg>
+  );
+}
+
+export function IconMail(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m4 7 8 6 8-6" />
+    </svg>
+  );
+}
+
+export function IconCalendar(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M3 9h18M8 3v4M16 3v4" />
+    </svg>
+  );
+}

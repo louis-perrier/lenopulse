@@ -220,4 +220,11 @@ export const fr: Dictionary = {
     visit: "Voir le projet",
     backHome: "Retour à l'accueil",
   },
+  launcher: {
+    open: "Ouvrir le menu de contact",
+    title: "Par où commencer ?",
+    chat: "Discuter avec l'assistant",
+    email: "Écrire un mail",
+    booking: "Réserver un appel",
+  },
 };

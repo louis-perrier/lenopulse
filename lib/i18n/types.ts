@@ -150,6 +150,14 @@ export interface CommonDict {
   backHome: string;
 }
 
+export interface LauncherDict {
+  open: string;
+  title: string;
+  chat: string;
+  email: string;
+  booking: string;
+}
+
 export interface Dictionary {
   meta: MetaDict;
   nav: NavDict;
@@ -165,4 +173,5 @@ export interface Dictionary {
   booking: BookingDict;
   footer: FooterDict;
   common: CommonDict;
+  launcher: LauncherDict;
 }

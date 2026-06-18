@@ -202,6 +202,7 @@ export const es: Dictionary = {
     lockedTitle: "Primero encuadremos tu proyecto",
     lockedText:
       "La reserva se abre una vez que tu proyecto esté encuadrado con el asistente de arriba.",
+    lockedCta: "Hablar con el asistente",
     unavailable:
       "La reserva en línea llega pronto. Mientras tanto, escríbeme mediante el formulario de contacto de abajo.",
     booked: "Reservado. Recibirás un email de confirmación. Hasta pronto.",

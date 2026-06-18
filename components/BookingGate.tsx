@@ -6,7 +6,7 @@ import type { Dictionary } from "@/lib/i18n/types";
 import { BRIEF_META_KEY, bookingConfig } from "@/lib/booking";
 import Reveal from "./Reveal";
 import RevealTitle from "./RevealTitle";
-import { IconCheck, IconLock } from "./Icons";
+import { IconArrow, IconCheck, IconLock } from "./Icons";
 
 // L'embed Cal.com est charge uniquement cote client (jamais au prerender statique),
 // pour ne pas evaluer le paquet au build.
@@ -100,6 +100,13 @@ export default function BookingGate({
                   {b.lockedTitle}
                 </h3>
                 <p className="mx-auto mt-2 max-w-sm text-sm text-ink-soft">{b.lockedText}</p>
+                <a
+                  href="#assistant"
+                  className="group mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-semibold text-background transition-colors hover:bg-primary-hover"
+                >
+                  {b.lockedCta}
+                  <IconArrow className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </a>
               </div>
             ) : !bookingConfig.calLink ? (
               <p className="mx-auto max-w-xl rounded-2xl border border-border-strong bg-surface-raised px-6 py-6 text-center text-sm text-ink-soft">

@@ -203,6 +203,7 @@ export const fr: Dictionary = {
     lockedTitle: "Cadrons d'abord votre projet",
     lockedText:
       "La réservation s'ouvre une fois votre projet cadré avec l'assistant ci-dessus.",
+    lockedCta: "Discuter avec l'assistant",
     unavailable:
       "La réservation en ligne arrive bientôt. En attendant, écrivez-moi via le formulaire de contact ci-dessous.",
     booked:

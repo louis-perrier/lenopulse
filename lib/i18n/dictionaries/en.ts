@@ -201,6 +201,7 @@ export const en: Dictionary = {
     subtitle: "A call to talk about your project and see how we can move forward together.",
     lockedTitle: "Let's scope your project first",
     lockedText: "Booking opens once your project is scoped with the assistant above.",
+    lockedCta: "Chat with the assistant",
     unavailable:
       "Online booking is coming soon. In the meantime, write to me through the contact form below.",
     booked: "You're booked. You'll receive a confirmation email. See you soon.",

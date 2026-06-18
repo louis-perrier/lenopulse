@@ -132,6 +132,7 @@ export interface BookingDict {
   subtitle: string;
   lockedTitle: string;
   lockedText: string;
+  lockedCta: string;
   unavailable: string;
   booked: string;
 }

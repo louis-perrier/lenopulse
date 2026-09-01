@@ -512,11 +512,6 @@ function CapabilitiesEditor({ initial }: { initial: CapGroup[] }) {
   return (
     <section className="mt-12 border-t border-border pt-8">
       <h2 className="font-display text-xl font-semibold text-ink">Capacites techniques</h2>
-      <p className="mt-1 text-sm text-ink-soft">
-        Le bloc Capabilities de la page, groupe par couche. Un groupe vide n&apos;est pas
-        enregistre.
-      </p>
-
       <div className="mt-5 space-y-3">
         {rows.map((r, i) => (
           <div

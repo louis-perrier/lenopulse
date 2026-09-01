@@ -40,14 +40,35 @@ function Label({ children }: { children: React.ReactNode }) {
 // Visuel du projet. Trois cadrages : capture plein cadre, logo centre, ou motif
 // abstrait quand aucune image n'est fournie.
 //
-// Les grandes tuiles passent en deux colonnes a partir de 1024 px : le texte a
-// gauche, l'image a droite sur toute la hauteur de la carte. L'image sans ratio
-// fixe remplit alors l'espace que le texte laisse, ce qui evite le vide quand la
-// carte s'etire pour s'aligner sur sa voisine.
-function Shot({ project, wide }: { project: PortfolioProject; wide: boolean }) {
-  const box = wide
-    ? "aspect-[16/9] lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:aspect-auto lg:h-full lg:border-b-0 lg:border-l"
-    : "aspect-[4/3]";
+// Toutes les images gardent le rapport 16/9, celui des captures d'ecran. Un
+// cadre carre ou 4/3 les rognerait et les rendrait illisibles.
+//
+// Les grandes tuiles occupent la largeur entiere et passent en deux colonnes a
+// partir de 1024 px : texte a gauche, capture a droite. La hauteur de la carte
+// est celle de l'image, et le texte dispose exactement de cette hauteur.
+function Shot({
+  project,
+  wide,
+  inverse,
+}: {
+  project: PortfolioProject;
+  wide: boolean;
+  inverse: boolean;
+}) {
+  // Une capture garde son 16/9 natif. Un logo ou un motif n'ont pas d'information
+  // a montrer sur cette hauteur : leur cadre est plus bas, ce qui evite un grand
+  // vide et laisse la vedette aux vraies captures.
+  const ratio = project.image_kind === "image" && project.image_url
+    ? "aspect-[16/9]"
+    : "aspect-[16/9] sm:aspect-[21/9]";
+
+  // Grande tuile : l'image se place a droite ou a gauche selon l'alternance, et
+  // le filet de separation change de cote avec elle.
+  const place = inverse
+    ? "lg:col-start-1 lg:row-start-1 lg:row-span-2 lg:aspect-[16/9] lg:border-b-0 lg:border-r"
+    : "lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:aspect-[16/9] lg:border-b-0 lg:border-l";
+
+  const box = wide ? `${ratio} ${place}` : ratio;
 
   if (project.image_url && project.image_kind === "logo") {
     return (
@@ -87,9 +108,11 @@ function Shot({ project, wide }: { project: PortfolioProject; wide: boolean }) {
 function ProjectCard({
   project,
   onOpen,
+  inverse = false,
 }: {
   project: PortfolioProject;
   onOpen: (p: PortfolioProject) => void;
+  inverse?: boolean;
 }) {
   const wide = project.span === "wide";
 
@@ -100,15 +123,21 @@ function ProjectCard({
       aria-haspopup="dialog"
       className={`group card-hairline flex flex-col overflow-hidden rounded-2xl border border-border bg-surface text-left transition-transform duration-200 hover:-translate-y-0.5 ${
         wide
-          ? "lg:col-span-4 lg:grid lg:grid-cols-[1fr_52%] lg:grid-rows-[1fr_auto]"
-          : "lg:col-span-2"
+          ? inverse
+            ? "lg:col-span-6 lg:grid lg:grid-cols-[55%_45%] lg:grid-rows-[1fr_auto]"
+            : "lg:col-span-6 lg:grid lg:grid-cols-[45%_55%] lg:grid-rows-[1fr_auto]"
+          : "lg:col-span-3"
       }`}
     >
-      <Shot project={project} wide={wide} />
+      <Shot project={project} wide={wide} inverse={inverse} />
 
       <div
         className={`flex min-w-0 flex-1 flex-col gap-2.5 p-5 ${
-          wide ? "lg:col-start-1 lg:row-start-1" : ""
+          wide
+            ? inverse
+              ? "lg:col-start-2 lg:row-start-1"
+              : "lg:col-start-1 lg:row-start-1"
+            : ""
         }`}
       >
         {project.tag && (
@@ -146,7 +175,11 @@ function ProjectCard({
 
       <div
         className={`flex items-center justify-between gap-3 border-t border-border/60 px-5 py-3 font-mono text-[11.5px] text-ink-faint ${
-          wide ? "lg:col-start-1 lg:row-start-2" : ""
+          wide
+            ? inverse
+              ? "lg:col-start-2 lg:row-start-2"
+              : "lg:col-start-1 lg:row-start-2"
+            : ""
         }`}
       >
         <span className="truncate">
@@ -283,10 +316,10 @@ function CardSkeleton({ wide }: { wide: boolean }) {
   return (
     <div
       className={`animate-pulse overflow-hidden rounded-2xl border border-border bg-surface ${
-        wide ? "lg:col-span-4" : "lg:col-span-2"
+        wide ? "lg:col-span-6" : "lg:col-span-3"
       }`}
     >
-      <div className={`${wide ? "aspect-[16/9]" : "aspect-[4/3]"} bg-surface-raised`} />
+      <div className="aspect-[16/9] bg-surface-raised" />
       <div className="grid gap-3 p-5">
         <div className="h-3 w-20 rounded bg-surface-raised" />
         <div className="h-5 w-2/3 rounded bg-surface-raised" />
@@ -333,8 +366,18 @@ export default function PortfolioPage() {
 
   const close = useCallback(() => setOpenProject(null), []);
 
-  const featured = projects.filter((p) => p.featured);
   const also = projects.filter((p) => !p.featured);
+
+  // Les grandes tuiles alternent le cote de leur image. Le rang ne compte que les
+  // grandes tuiles : ce qui se trouve entre elles n'a aucune influence, et rien
+  // n'est a regler dans l'admin.
+  let rangGrande = 0;
+  const featured = projects
+    .filter((p) => p.featured)
+    .map((p) => {
+      const inverse = p.span === "wide" && rangGrande++ % 2 === 1;
+      return { projet: p, inverse };
+    });
 
   return (
     <main className="relative min-h-screen">
@@ -441,8 +484,13 @@ export default function PortfolioPage() {
 
         {status === "ready" && featured.length > 0 && (
           <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-6">
-            {featured.map((p) => (
-              <ProjectCard key={p.id} project={p} onOpen={setOpenProject} />
+            {featured.map(({ projet, inverse }) => (
+              <ProjectCard
+                key={projet.id}
+                project={projet}
+                onOpen={setOpenProject}
+                inverse={inverse}
+              />
             ))}
           </div>
         )}

@@ -74,3 +74,94 @@ export async function sbSelect<T = Record<string, unknown>>(
     return [];
   }
 }
+
+// Insertion d'une ligne. Renvoie la ligne creee (avec son id genere), ou null.
+export async function sbInsert<T = Record<string, unknown>>(
+  env: SupabaseEnv,
+  table: string,
+  row: Record<string, unknown>
+): Promise<T | null> {
+  if (!hasSupabase(env)) return null;
+  try {
+    const res = await fetch(`${env.SUPABASE_URL}/rest/v1/${table}`, {
+      method: "POST",
+      headers: { ...headers(env), Prefer: "return=representation" },
+      body: JSON.stringify(row),
+    });
+    if (!res.ok) return null;
+    const rows = (await res.json()) as T[];
+    return rows[0] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+// Mise a jour ciblee. `query` est un filtre PostgREST (ex. "id=eq.<uuid>").
+export async function sbPatch(
+  env: SupabaseEnv,
+  table: string,
+  query: string,
+  patch: Record<string, unknown>
+): Promise<boolean> {
+  if (!hasSupabase(env)) return false;
+  try {
+    const res = await fetch(`${env.SUPABASE_URL}/rest/v1/${table}?${query}`, {
+      method: "PATCH",
+      headers: { ...headers(env), Prefer: "return=minimal" },
+      body: JSON.stringify(patch),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+// Suppression ciblee. `query` est un filtre PostgREST (ex. "id=eq.<uuid>").
+export async function sbDelete(
+  env: SupabaseEnv,
+  table: string,
+  query: string
+): Promise<boolean> {
+  if (!hasSupabase(env)) return false;
+  try {
+    const res = await fetch(`${env.SUPABASE_URL}/rest/v1/${table}?${query}`, {
+      method: "DELETE",
+      headers: { ...headers(env), Prefer: "return=minimal" },
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+// Envoi d'un fichier dans un bucket Storage public. Renvoie l'URL publique du
+// fichier, ou null en cas d'echec. Le bucket doit exister et etre public.
+export async function sbUploadPublic(
+  env: SupabaseEnv,
+  bucket: string,
+  path: string,
+  body: ArrayBuffer,
+  contentType: string
+): Promise<string | null> {
+  if (!hasSupabase(env)) return null;
+  try {
+    const key = env.SUPABASE_SERVICE_ROLE_KEY as string;
+    const res = await fetch(
+      `${env.SUPABASE_URL}/storage/v1/object/${bucket}/${path}`,
+      {
+        method: "POST",
+        headers: {
+          apikey: key,
+          Authorization: `Bearer ${key}`,
+          "Content-Type": contentType,
+          "x-upsert": "true",
+        },
+        body,
+      }
+    );
+    if (!res.ok) return null;
+    return `${env.SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`;
+  } catch {
+    return null;
+  }
+}

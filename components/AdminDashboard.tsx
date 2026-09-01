@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { IconArrow, IconCheck } from "./Icons";
+import AdminPortfolio from "./AdminPortfolio";
 
 // Vue admin reservee a Louis. Textes en francais en dur : outil interne, hors du
 // systeme i18n du site public. Lit /api/admin-bookings (protege par cookie signe).
@@ -256,6 +257,7 @@ function LeadCard({ lead, duplicate }: { lead: Lead; duplicate: boolean }) {
 
 export default function AdminDashboard() {
   const [view, setView] = useState<"loading" | "login" | "ready">("loading");
+  const [tab, setTab] = useState<"appels" | "portfolio">("appels");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -399,7 +401,7 @@ export default function AdminDashboard() {
   return (
     <main className="mx-auto min-h-screen max-w-4xl px-6 py-16">
       <div className="flex items-center justify-between gap-4">
-        <h1 className="font-display text-3xl font-semibold text-ink">Vos appels</h1>
+        <h1 className="font-display text-3xl font-semibold text-ink">Espace admin</h1>
         <button
           type="button"
           onClick={logout}
@@ -409,6 +411,33 @@ export default function AdminDashboard() {
         </button>
       </div>
 
+      {/* Onglets. Deux outils distincts : le suivi des rendez-vous, et le contenu
+          de la page /portfolio. */}
+      <nav className="mt-8 flex gap-2 border-b border-border" aria-label="Sections de l'admin">
+        {([
+          { key: "appels", label: "Vos appels" },
+          { key: "portfolio", label: "Portfolio" },
+        ] as const).map((t) => (
+          <button
+            key={t.key}
+            type="button"
+            onClick={() => setTab(t.key)}
+            aria-current={tab === t.key ? "page" : undefined}
+            className={`-mb-px min-h-11 border-b-2 px-4 text-sm font-medium transition-colors ${
+              tab === t.key
+                ? "border-primary text-primary"
+                : "border-transparent text-ink-soft hover:text-ink"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </nav>
+
+      {tab === "portfolio" && <AdminPortfolio />}
+
+      {tab === "appels" && (
+        <>
       {/* Bandeau resume : prochain RDV + totaux */}
       <section className="mt-8 rounded-2xl border border-border-strong bg-surface-raised p-6">
         <div className="grid gap-6 sm:grid-cols-2 sm:items-center">
@@ -520,6 +549,8 @@ export default function AdminDashboard() {
             ))}
           </div>
         </section>
+      )}
+        </>
       )}
     </main>
   );

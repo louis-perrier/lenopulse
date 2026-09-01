@@ -21,6 +21,7 @@
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   --animate-float: float 14s ease-in-out infinite;
 }
@@ -184,5 +185,54 @@
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ============================================================
+   Page /portfolio. Meme marque (noir et or) que le site, mais registre
+   plus dense et plus technique : chasse fixe pour les donnees, tuiles de
+   tailles inegales, filets fins. Concue mobile d'abord.
+   ============================================================ */
+
+/* Filet degrade sous les titres de section. */
+.pf-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 168, 71, 0.5),
+    rgba(212, 168, 71, 0.05) 60%,
+    transparent
+  );
+}
+
+/* Visuel de repli quand un projet n'a pas d'image. Motif abstrait dore, dans
+   l'esprit des placeholders deja utilises sur la page d'accueil. */
+.pf-abstract {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(212, 168, 71, 0.16) 0 2px,
+      transparent 2px 14px
+    ),
+    radial-gradient(120% 90% at 20% 10%, rgba(212, 168, 71, 0.18), transparent 60%),
+    linear-gradient(160deg, #14100a, #0d0d13);
+}
+
+/* Fiche detaillee : feuille remontante sur telephone, panneau lateral sur
+   grand ecran. La transition suit prefers-reduced-motion via globals. */
+.pf-sheet {
+  transform: translateY(101%);
+  transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pf-sheet[data-open="true"] {
+  transform: translateY(0);
+}
+
+@media (min-width: 1024px) {
+  .pf-sheet {
+    transform: translateX(101%);
+  }
+  .pf-sheet[data-open="true"] {
+    transform: translateX(0);
   }
 }

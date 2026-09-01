@@ -14,7 +14,15 @@ npm-debug.log*
 .env.local
 .env*.local
 .claude/mcp.json
+.mcp.json
 .dev.vars
+
+# Cache local de wrangler (serveur Cloudflare de developpement)
+/.wrangler
+
+# Archives (regle projet : jamais d'archive sur GitHub)
+*.zip
+*.ZIP
 
 # Divers
 .DS_Store

@@ -1,13 +1,5 @@
-// Cloudflare Pages Function. Recoit la soumission du formulaire de contact,
-// valide les champs, filtre les bots (honeypot) puis envoie l'email via Resend.
-//
-// Variables d'environnement a definir dans les settings du projet Cloudflare Pages :
-//   RESEND_API_KEY  cle API Resend (secret, obligatoire)
-//   CONTACT_FROM    expediteur sur un domaine verifie dans Resend (optionnel)
-//   CONTACT_TO      destinataire (optionnel, defaut ci-dessous)
-//
-// Cette fonction ne s'execute que sur Cloudflare, pas sous `next dev`. En local, le
-// formulaire bascule sur un repli mailto (voir components/Contact.tsx).
+// Ne tourne que sur Cloudflare, pas sous next dev : en local le formulaire bascule
+// sur un repli mailto (voir components/Contact.tsx).
 
 interface Env {
   RESEND_API_KEY: string;

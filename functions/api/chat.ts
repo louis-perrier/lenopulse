@@ -1,17 +1,6 @@
-// Cloudflare Pages Function. Proxy de l'assistant IA de cadrage.
-// Relaie la conversation vers l'API Anthropic (Claude), cache la cle, borne les
-// couts, filtre les bots (honeypot) puis renvoie la reponse et, le cas echeant,
-// la synthese de brief structuree.
-//
-// Variables d'environnement (settings du projet Cloudflare Pages) :
-//   ANTHROPIC_API_KEY           cle API Anthropic (secret, obligatoire)
-//   SUPABASE_URL                URL du projet Supabase (optionnel)
-//   SUPABASE_SERVICE_ROLE_KEY   cle service_role Supabase (secret, optionnel)
-//
-// La persistance Supabase est best-effort : si elle n'est pas configuree ou
-// echoue, l'assistant repond quand meme. Cette fonction ne s'execute que sur
-// Cloudflare, pas sous `next dev` (l'assistant bascule alors sur un repli, voir
-// components/Assistant.tsx).
+// Proxy vers l'API Anthropic : cache la cle, borne les couts, filtre les bots.
+// La persistance Supabase est best-effort, l'assistant repond meme si elle echoue.
+// Ne tourne que sur Cloudflare, pas sous next dev (repli dans Assistant.tsx).
 
 import { type SupabaseEnv, hasSupabase, sbUpsert } from "../_lib/supabase";
 

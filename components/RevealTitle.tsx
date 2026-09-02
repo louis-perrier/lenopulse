@@ -3,17 +3,9 @@
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 
-// Titre revele par masque : le texte monte depuis le bas dans un conteneur
-// overflow-hidden. A placer a l'interieur de la balise de titre (h1 / h2) pour
-// conserver la semantique et les styles typographiques du parent.
-// py / -my compensent le clipping des jambages et accents au repos quand le
-// titre utilise un interlignage serre.
-//
-// Important : le declenchement est observe sur le conteneur EXTERIEUR (jamais
-// decoupe) via useInView, et non sur le texte interieur. Au repos le texte est
-// translate de 115% donc entierement decoupe par overflow-hidden : un observer
-// pose dessus le verrait toujours "hors champ" et n'animerait jamais (le titre
-// resterait invisible). En "animations reduites", la translation est neutralisee.
+// A placer dans la balise de titre pour garder la semantique du parent.
+// useInView observe le conteneur EXTERIEUR : au repos le texte est translate de
+// 115%, donc decoupe par overflow-hidden, un observer dessus n'animerait jamais.
 export default function RevealTitle({
   children,
   delay = 0,

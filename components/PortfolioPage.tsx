@@ -11,15 +11,10 @@ interface CapabilityGroup {
   items: readonly string[];
 }
 
-// Page /portfolio. Vitrine technique adressee a des clients qui arrivent depuis
-// une candidature Upwork : lecture en quelques secondes, souvent sur telephone.
-//
-// Les projets viennent de /api/portfolio (table Supabase portfolio_projects) et
-// s'editent depuis /admin, sans redeploiement. La page etant exportee en
-// statique, le chargement se fait cote navigateur : les etats vide, en cours et
-// en erreur sont donc affiches explicitement, jamais une page blanche.
+// Page exportee en statique : les projets se chargent cote navigateur, d'ou les
+// etats vide, en cours et en erreur affiches explicitement.
 
-// ---------------------------------------------------------------- petits blocs
+// petits blocs
 
 function Chip({ children }: { children: React.ReactNode }) {
   return (
@@ -37,15 +32,8 @@ function Label({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Visuel du projet. Trois cadrages : capture plein cadre, logo centre, ou motif
-// abstrait quand aucune image n'est fournie.
-//
-// Toutes les images gardent le rapport 16/9, celui des captures d'ecran. Un
-// cadre carre ou 4/3 les rognerait et les rendrait illisibles.
-//
-// Les grandes tuiles occupent la largeur entiere et passent en deux colonnes a
-// partir de 1024 px : texte a gauche, capture a droite. La hauteur de la carte
-// est celle de l'image, et le texte dispose exactement de cette hauteur.
+// Rapport 16/9 impose : c'est celui des captures, un cadre carre les rognerait.
+// Les grandes tuiles passent en deux colonnes a partir de 1024 px.
 function Shot({
   project,
   wide,
@@ -103,7 +91,7 @@ function Shot({
   return <div className={`${box} pf-abstract border-b border-border`} aria-hidden="true" />;
 }
 
-// ---------------------------------------------------------------- carte projet
+// carte projet
 
 function ProjectCard({
   project,
@@ -191,7 +179,7 @@ function ProjectCard({
   );
 }
 
-// ------------------------------------------------------- fiche detaillee
+// fiche detaillee
 
 function Block({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -310,7 +298,7 @@ function Sheet({
   );
 }
 
-// ------------------------------------------------------------------- squelettes
+// squelettes
 
 function CardSkeleton({ wide }: { wide: boolean }) {
   return (
@@ -329,7 +317,7 @@ function CardSkeleton({ wide }: { wide: boolean }) {
   );
 }
 
-// ------------------------------------------------------------------------ page
+// page
 
 export default function PortfolioPage() {
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");

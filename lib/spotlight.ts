@@ -1,7 +1,5 @@
-// Lueur doree qui suit le curseur sur une carte. Throttle via requestAnimationFrame
-// (une seule mise a jour par frame, quelle que soit la frequence des pointermove).
-// On ecrit --mx / --my sur la carte survolee ; le rendu est gere en CSS
-// (.spotlight-layer dans globals.css).
+// Throttle par requestAnimationFrame : une seule mise a jour par frame quelle que
+// soit la frequence des pointermove. Le rendu est en CSS (.spotlight-layer).
 import type { PointerEvent } from "react";
 
 let frame = 0;

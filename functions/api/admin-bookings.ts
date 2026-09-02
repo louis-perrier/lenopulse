@@ -1,9 +1,4 @@
-// Cloudflare Pages Function. Donnees de la vue admin (reservation a venir + briefs).
-// GET protege par le cookie de session admin. Lit Supabase via la cle service_role.
-//
-// Variables d'environnement :
-//   ADMIN_TOKEN_SECRET          secret de signature du jeton de session
-//   SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY
+// GET protege par le cookie de session admin. Lit Supabase en service_role.
 
 import { type SupabaseEnv, hasSupabase, sbSelect } from "../_lib/supabase";
 import { getCookie, verifyToken } from "../_lib/adminToken";

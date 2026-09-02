@@ -1,11 +1,7 @@
 import type { Locale } from "./i18n/types";
 
-// Contenu legal reel (mentions legales et politique de confidentialite RGPD).
-// Editeur : Louis Perrier, micro-entreprise, Nantes. Site statique, sans cookie
-// publicitaire ni traceur tiers. Trois traitements : formulaire de contact (fonction
-// Cloudflare + Resend, repli mailto), assistant IA (Anthropic pour les reponses,
-// Supabase pour la memoire des conversations) et reservation d'appel (Cal.com), les
-// donnees de RDV etant aussi conservees dans Supabase (hebergement UE).
+// Contenu legal reel, pas un gabarit. Trois traitements declares : contact,
+// assistant IA et reservation. Toute evolution technique doit s'y refleter.
 
 export interface LegalBlock {
   heading: string;

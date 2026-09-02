@@ -9,11 +9,8 @@ import RevealTitle from "./RevealTitle";
 import BookingGate from "./BookingGate";
 import { IconArrow, IconCheck } from "./Icons";
 
-// Section assistant IA (vue complete). L'etat de la conversation vit dans
-// AssistantChatProvider : cette section et la bulle flottante partagent la meme
-// conversation et le meme deverrouillage de reservation. Ici on assemble le fil
-// (ChatThread), la saisie (ChatComposer), la carte de brief detaillee et la
-// reservation gatee (BookingGate).
+// L'etat de la conversation vit dans AssistantChatProvider : cette section et la
+// bulle flottante partagent la meme conversation.
 export default function Assistant({ dict }: { dict: Dictionary }) {
   const a = dict.assistant;
   const { messages, loading, error, brief, briefReady, sessionId, send, restart } =

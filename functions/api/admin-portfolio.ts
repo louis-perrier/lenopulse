@@ -1,18 +1,5 @@
-// Cloudflare Pages Function. Gestion des projets du portfolio depuis /admin.
-// Protege par le cookie de session admin (meme mecanisme que admin-bookings).
-//
-//   GET    /api/admin-portfolio           tous les projets (brouillons compris) et
-//                                         les capacites techniques
-//   POST   /api/admin-portfolio           cree un projet (renvoie la ligne creee)
-//   POST   /api/admin-portfolio  {action:"reorder", ids:[...]}         reordonne
-//   POST   /api/admin-portfolio  {action:"capabilities", groups:[...]} enregistre les
-//                                         capacites (cle portfolio_capabilities de app_config)
-//   PUT    /api/admin-portfolio           met a jour un projet (body.id requis)
-//   DELETE /api/admin-portfolio?id=<uuid> supprime un projet
-//
-// Variables d'environnement :
-//   ADMIN_TOKEN_SECRET
-//   SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY
+// CRUD des projets du portfolio, protege par le cookie de session admin.
+// POST porte aussi les actions "reorder" et "capabilities".
 
 import {
   type SupabaseEnv,

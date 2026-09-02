@@ -1,10 +1,5 @@
-// Helpers d'acces a Supabase via l'API REST PostgREST, pour les fonctions
-// Cloudflare Pages. Aucune dependance : on utilise fetch et la cle service_role
-// (jamais exposee au navigateur). La RLS refuse tout par defaut, seule la cle
-// service_role lit et ecrit.
-//
-// Le dossier `functions/_lib` (prefixe underscore) n'est pas route par Cloudflare
-// Pages ; il sert uniquement de module partage importe par les fonctions.
+// Acces Supabase via PostgREST avec la cle service_role, jamais exposee au
+// navigateur. Le prefixe underscore de _lib empeche Cloudflare Pages de le router.
 
 export interface SupabaseEnv {
   SUPABASE_URL?: string;

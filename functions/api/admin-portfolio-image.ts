@@ -1,15 +1,5 @@
-// Cloudflare Pages Function. Envoi d'un visuel de projet dans le bucket Storage
-// `portfolio` (public en lecture). Protege par le cookie de session admin.
-//
-//   POST /api/admin-portfolio-image   corps multipart, champ "file"
-//   Reponse : { ok: true, url: "https://.../portfolio/<fichier>" }
-//
-// Le fichier est renomme cote serveur : le nom d'origine n'est jamais utilise tel
+// Le fichier est renomme cote serveur : le nom d'origine n'est jamais repris tel
 // quel, pour eviter les collisions et les caracteres douteux dans l'URL.
-//
-// Variables d'environnement :
-//   ADMIN_TOKEN_SECRET
-//   SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY
 
 import { type SupabaseEnv, hasSupabase, sbUploadPublic } from "../_lib/supabase";
 import { getCookie, verifyToken } from "../_lib/adminToken";

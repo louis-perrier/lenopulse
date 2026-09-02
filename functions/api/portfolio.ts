@@ -1,11 +1,5 @@
-// Cloudflare Pages Function. Liste publique des projets du portfolio (page /portfolio).
-// GET /api/portfolio, sans authentification : ne renvoie que les projets publies.
-//
-// Le cache CDN est court (30 s) : une modification faite dans l'admin est visible
-// par tout le monde en moins d'une demi minute, sans redeploiement du site.
-//
-// Variables d'environnement :
-//   SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY
+// Cache CDN de 30 s : une modification faite dans l'admin est visible partout en
+// moins d'une demi minute, sans redeploiement.
 
 import { type SupabaseEnv, hasSupabase, sbSelect } from "../_lib/supabase";
 

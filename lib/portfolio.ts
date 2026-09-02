@@ -1,9 +1,5 @@
-// Contenu fixe de la page /portfolio (hors projets, qui vivent en base et
-// s'editent depuis /admin). Textes en anglais : la page s'adresse a des clients
-// qui arrivent depuis une candidature Upwork.
-//
-// Ces blocs changent rarement. S'il faut aussi les rendre editables depuis
-// l'admin, la table `app_config` (deja au schema) est prevue pour ca.
+// Contenu fixe de /portfolio, hors projets qui vivent en base. Textes en anglais :
+// la page s'adresse a des clients venus d'Upwork.
 
 export const portfolioConfig = {
   upworkUrl: "https://upwork.com/freelancers/~01eb55d089d1e11d28",

@@ -3,10 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { ChatMessage } from "@/lib/chat";
 
-// Fil de conversation partage entre la section assistant et la bulle flottante.
-// Purement presentational : il affiche l'accueil, les messages et l'indicateur de
-// reflexion, et defile automatiquement vers le dernier message. La hauteur max est
-// pilotee par `className` selon le contexte (section large ou bulle compacte).
+// Hauteur max pilotee par className selon le contexte (section large ou bulle).
 export default function ChatThread({
   messages,
   loading,

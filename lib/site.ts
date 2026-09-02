@@ -17,10 +17,7 @@ export const siteConfig = {
 
 export type SocialKey = keyof typeof siteConfig.socials;
 
-// Visuels et liens reels des realisations, communs aux 3 langues (non traduits).
-// image : capture plein cadre (object-cover). logo : logo centre sur le fond
-// degrade dore (object-contain). url : ouverte dans un nouvel onglet pour ne pas
-// faire quitter le site au visiteur. Fichiers dans public/realisations/.
+// image : capture plein cadre (object-cover). logo : logo centre (object-contain).
 export const workAssets: Record<
   string,
   { image?: string; logo?: string; url?: string }

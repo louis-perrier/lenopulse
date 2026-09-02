@@ -2,13 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-// Gestion du portfolio depuis /admin. Ajouter, modifier, reordonner, supprimer
-// un projet sans toucher au code : tout passe par /api/admin-portfolio, protege
-// par le meme cookie de session que le reste de l'admin.
-//
 // Textes en francais en dur : outil interne, hors du systeme i18n du site public.
-// Les projets, eux, sont rediges en anglais car la page /portfolio s'adresse a
-// des clients Upwork.
+// Les projets sont rediges en anglais, la page /portfolio vise des clients Upwork.
 
 // Un groupe de capacites techniques affiche sur la page /portfolio.
 interface CapGroup {
@@ -63,7 +58,7 @@ const IMAGE_KIND_LABELS: { value: Project["image_kind"]; label: string; help: st
   { value: "abstract", label: "Motif", help: "Aucune image. Un motif dore est dessine." },
 ];
 
-// ------------------------------------------------------------- champs de saisie
+// champs de saisie
 
 function Field({
   label,
@@ -159,7 +154,7 @@ function Choice<T extends string>({
   );
 }
 
-// ---------------------------------------------------------------- formulaire
+// formulaire
 
 function ProjectForm({
   initial,
@@ -458,7 +453,7 @@ function ProjectForm({
   );
 }
 
-// -------------------------------------------------- capacites techniques
+// capacites techniques
 
 // Bloc Capabilities de la page /portfolio. Un groupe par ligne : un nom, et les
 // technologies separees par des virgules. L'ensemble est remplace en bloc a
@@ -571,7 +566,7 @@ function CapabilitiesEditor({ initial }: { initial: CapGroup[] }) {
   );
 }
 
-// ------------------------------------------------------------------- ecran
+// ecran
 
 export default function AdminPortfolio() {
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");

@@ -17,11 +17,8 @@ import {
   saveSession,
 } from "@/lib/chat";
 
-// Source de verite unique de l'assistant IA. L'etat de la conversation (session,
-// messages, brief, deverrouillage de la reservation) vit ici, pas dans un composant
-// precis. La section assistant et la bulle flottante consomment le meme contexte :
-// une seule conversation, partagee en direct, et un seul `briefReady` qui deverrouille
-// la reservation partout. La persistance localStorage reste deleguee a lib/chat.ts.
+// Source de verite unique de l'assistant : un seul etat de conversation pour la
+// section et la bulle flottante. Persistance localStorage deleguee a lib/chat.ts.
 
 export type ChatErrorKind = "error" | "unavailable" | null;
 

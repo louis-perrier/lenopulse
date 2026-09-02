@@ -7,11 +7,8 @@ import ChatThread from "./ChatThread";
 import ChatComposer from "./ChatComposer";
 import { IconChat, IconMail, IconCalendar, IconClose, IconCheck } from "./Icons";
 
-// Bulle de contact flottante, desormais interactive. Le panneau ouvre directement le
-// mini-chat de l'assistant IA, qui partage sa conversation avec la section assistant
-// via AssistantChatProvider (meme session, meme deverrouillage de reservation). Le mail
-// et la reservation restent de simples raccourcis vers leurs sections. Remplace
-// l'ancienne MobileCtaBar. Apparait apres un debut de scroll pour ne pas masquer le hero.
+// Le panneau ouvre le mini-chat, qui partage sa session avec la section assistant.
+// Apparait apres un debut de scroll pour ne pas masquer le hero.
 export default function ContactLauncher({ dict }: { dict: Dictionary }) {
   const l = dict.launcher;
   const a = dict.assistant;

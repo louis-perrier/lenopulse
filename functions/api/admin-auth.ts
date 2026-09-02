@@ -1,10 +1,4 @@
-// Cloudflare Pages Function. Authentification admin par mot de passe.
-// POST { password } : compare au secret ADMIN_PASSWORD (temps constant) et pose un
-// cookie de session signe. DELETE : efface le cookie (deconnexion).
-//
-// Variables d'environnement (secrets Cloudflare Pages) :
-//   ADMIN_PASSWORD       mot de passe admin
-//   ADMIN_TOKEN_SECRET   secret de signature du jeton de session
+// Comparaison du mot de passe en temps constant, puis cookie de session signe.
 
 import { createToken, timingSafeEqual } from "../_lib/adminToken";
 

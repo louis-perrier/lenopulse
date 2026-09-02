@@ -1,16 +1,5 @@
-// Cloudflare Pages Function. Recoit les webhooks Cal.com (reservations), verifie
-// la signature, enregistre la reservation dans Supabase (reliee au brief via
-// metadata.briefId) puis notifie Louis par email avec le brief en contexte.
-//
-// Variables d'environnement (settings du projet Cloudflare Pages) :
-//   CAL_WEBHOOK_SECRET          secret du webhook Cal.com (obligatoire)
-//   SUPABASE_URL                URL du projet Supabase
-//   SUPABASE_SERVICE_ROLE_KEY   cle service_role Supabase (secret)
-//   RESEND_API_KEY              cle API Resend (pour la notification email)
-//   CONTACT_FROM / CONTACT_TO   expediteur / destinataire de la notification
-//
-// Signature : Cal.com envoie un HMAC SHA-256 (hex) du corps BRUT dans l'en-tete
-// `x-cal-signature-256`. On recalcule et on compare en temps constant.
+// Cal.com signe le corps BRUT en HMAC SHA-256 hex dans x-cal-signature-256.
+// On recalcule et on compare en temps constant avant tout traitement.
 
 import { type SupabaseEnv, hasSupabase, sbSelect, sbUpsert } from "../_lib/supabase";
 

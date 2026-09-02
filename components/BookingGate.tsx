@@ -12,11 +12,8 @@ import { IconArrow, IconCheck, IconLock } from "./Icons";
 // pour ne pas evaluer le paquet au build.
 const Cal = dynamic(() => import("@calcom/embed-react"), { ssr: false });
 
-// Section de reservation Cal.com. Verrouillee tant que le brief n'est pas pret :
-// la reservation ne s'ouvre qu'apres le cadrage du projet par l'assistant. Le lien
-// Cal.com est passe via `metadata.briefId` (= sessionId) pour relier la reservation
-// au brief cote serveur (webhook -> Supabase). Repli gracieux si Cal.com n'est pas
-// encore configure (lien vide) : on invite a utiliser le formulaire de contact.
+// Cal.com recoit metadata.briefId (= sessionId) pour relier la reservation au brief
+// cote serveur. Lien vide = Cal.com pas configure, on renvoie vers le formulaire.
 export default function BookingGate({
   dict,
   briefReady,

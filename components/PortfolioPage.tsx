@@ -552,6 +552,8 @@ export default function PortfolioPage() {
           rien n'est publie. */}
       <AutomationsSection />
 
+      <div className="pf-seam" aria-hidden="true" />
+
       {/* Capacites techniques. Seule section en rupture claire : elle casse le
           bloc sombre du bas de page, comme Process et A propos sur la home. Les
           tokens de couleur sont redefinis localement par .section-light, donc les

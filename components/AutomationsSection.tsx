@@ -218,8 +218,7 @@ export default function AutomationsSection() {
         Automations you can take
       </h2>
       <p className="pb-5.5 max-w-[52ch] text-sm text-ink-soft">
-        Working n8n scenarios, simplified from what I build for clients. Copy one,
-        paste it in your own instance, run it. No email, no sign up.
+        Simplified from real client builds. Copy, paste in your n8n, run. No sign up.
       </p>
       <div className="pf-rule mb-7" />
 

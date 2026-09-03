@@ -203,6 +203,29 @@
   );
 }
 
+/* Couture entre le dernier bloc sombre et la section claire. La lumiere monte
+   vers le filet or de .section-light, qui reste la seule ligne franche. */
+.pf-seam {
+  position: relative;
+  height: 3.5rem;
+  background: radial-gradient(
+    70% 120% at 50% 100%,
+    rgba(212, 168, 71, 0.12),
+    transparent 72%
+  );
+}
+.pf-seam::before {
+  content: "";
+  position: absolute;
+  bottom: 0.8rem;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  transform: translateX(-50%) rotate(45deg);
+  border: 1px solid rgba(212, 168, 71, 0.5);
+  background: var(--color-background);
+}
+
 /* Visuel de repli quand un projet n'a pas d'image. Motif abstrait dore, dans
    l'esprit des placeholders deja utilises sur la page d'accueil. */
 .pf-abstract {

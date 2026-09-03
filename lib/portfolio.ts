@@ -6,7 +6,7 @@ export const portfolioConfig = {
   email: "louis.perrier.chenoise@gmail.com",
 
   eyebrow: "Full-stack & AI developer . Nantes, France",
-  titleStart: "I build AI systems that ",
+  titleStart: "I build systems that ",
   titleHighlight: "run without me.",
   subtitle: "Voice agents, automation and web apps. One developer, end to end.",
 
@@ -57,4 +57,18 @@ export interface PortfolioProject {
   decisions: string | null;
   result: string | null;
   status: string | null;
+}
+
+// Un scenario n8n tel que le renvoie /api/automations. Le workflow complet est
+// livre avec la liste : la copie vers le presse-papier doit rester synchrone.
+export interface PortfolioAutomation {
+  id: string;
+  position: number;
+  name: string;
+  summary: string | null;
+  description: string | null;
+  tools: string[];
+  image_url: string | null;
+  workflow_json: string | null;
+  node_count: number | null;
 }

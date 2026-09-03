@@ -595,8 +595,12 @@ export default function AdminPortfolio() {
     }
   };
 
+  // Chargement enveloppe dans une fonction asynchrone immediate, comme dans
+  // AdminDashboard : les setState ne partent qu'apres la reponse du reseau.
   useEffect(() => {
-    void load();
+    (async () => {
+      await load();
+    })();
   }, []);
 
   // Deplace un projet d'un cran, puis enregistre le nouvel ordre complet.

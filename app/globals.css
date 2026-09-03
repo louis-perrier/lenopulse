@@ -188,11 +188,9 @@
   }
 }
 
-/*
-   Page /portfolio. Meme marque (noir et or) que le site, mais registre
+/* Page /portfolio. Meme marque (noir et or) que le site, mais registre
    plus dense et plus technique : chasse fixe pour les donnees, tuiles de
-   tailles inegales, filets fins. Concue mobile d'abord.
-    */
+   tailles inegales, filets fins. Concue mobile d'abord. */
 
 /* Filet degrade sous les titres de section. */
 .pf-rule {

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { portfolioConfig as cfg, type PortfolioProject } from "@/lib/portfolio";
+import AutomationsSection from "./AutomationsSection";
 
 // Groupe de capacites tel que renvoye par /api/portfolio. La liste vit dans
 // app_config et s'edite depuis /admin ; en son absence, on retombe sur celle
@@ -546,6 +547,10 @@ export default function PortfolioPage() {
           </div>
         </section>
       )}
+
+      {/* Scenarios n8n a emporter. La section se charge seule et disparait si
+          rien n'est publie. */}
+      <AutomationsSection />
 
       {/* Capacites techniques. Seule section en rupture claire : elle casse le
           bloc sombre du bas de page, comme Process et A propos sur la home. Les

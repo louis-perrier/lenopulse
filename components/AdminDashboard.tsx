@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { IconArrow, IconCheck } from "./Icons";
 import AdminPortfolio from "./AdminPortfolio";
+import AdminAutomations from "./AdminAutomations";
 
 // Vue admin reservee a Louis. Textes en francais en dur : outil interne, hors du
 // systeme i18n du site public. Lit /api/admin-bookings (protege par cookie signe).
@@ -257,7 +258,7 @@ function LeadCard({ lead, duplicate }: { lead: Lead; duplicate: boolean }) {
 
 export default function AdminDashboard() {
   const [view, setView] = useState<"loading" | "login" | "ready">("loading");
-  const [tab, setTab] = useState<"appels" | "portfolio">("appels");
+  const [tab, setTab] = useState<"appels" | "portfolio" | "automatisations">("appels");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -417,6 +418,7 @@ export default function AdminDashboard() {
         {([
           { key: "appels", label: "Vos appels" },
           { key: "portfolio", label: "Portfolio" },
+          { key: "automatisations", label: "Automatisations" },
         ] as const).map((t) => (
           <button
             key={t.key}
@@ -435,6 +437,8 @@ export default function AdminDashboard() {
       </nav>
 
       {tab === "portfolio" && <AdminPortfolio />}
+
+      {tab === "automatisations" && <AdminAutomations />}
 
       {tab === "appels" && (
         <>

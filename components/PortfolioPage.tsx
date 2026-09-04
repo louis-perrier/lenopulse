@@ -438,6 +438,11 @@ export default function PortfolioPage() {
         </div>
       </section>
 
+      {/* Scenarios n8n a emporter, juste sous le hero : le visiteur arrive d'une
+          candidature qui parle d'automatisation, la preuve passe avant le reste.
+          La section se charge seule et disparait si rien n'est publie. */}
+      <AutomationsSection />
+
       {/* Projets mis en avant */}
       <section className="mx-auto max-w-[1180px] px-5 py-11 sm:px-8 sm:py-16">
         <h2 className="pb-5.5 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
@@ -547,10 +552,6 @@ export default function PortfolioPage() {
           </div>
         </section>
       )}
-
-      {/* Scenarios n8n a emporter. La section se charge seule et disparait si
-          rien n'est publie. */}
-      <AutomationsSection />
 
       <div className="pf-seam" aria-hidden="true" />
 

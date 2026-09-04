@@ -32,10 +32,31 @@ function fileName(name: string): string {
   return `${base}.json`;
 }
 
+// Cle de l'ancre dans l'URL. Le slug vient de la base et ne bouge plus une fois
+// pose ; l'id ne sert que si une ligne ancienne n'en a pas encore.
+function ancre(a: PortfolioAutomation): string {
+  return a.slug ?? a.id;
+}
+
+function IconeExterne() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path
+        d="M4.5 1.5h6v6M10.5 1.5 5 7M9 8v2.5H1.5V3H4"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function AutomationCard({ automation }: { automation: PortfolioAutomation }) {
   const [copied, setCopied] = useState(false);
   const [failed, setFailed] = useState(false);
   const workflow = automation.workflow_json;
+  const guide = automation.guide_url;
 
   useEffect(() => {
     if (!copied) return;
@@ -91,7 +112,10 @@ function AutomationCard({ automation }: { automation: PortfolioAutomation }) {
   };
 
   return (
-    <article className="card-hairline flex flex-col overflow-hidden rounded-2xl border border-border bg-surface">
+    <article
+      id={`a-${ancre(automation)}`}
+      className="card-hairline flex scroll-mt-24 flex-col overflow-hidden rounded-2xl border border-border bg-surface"
+    >
       {automation.image_url ? (
         <div className="aspect-[16/9] overflow-hidden border-b border-border bg-surface">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -144,26 +168,41 @@ function AutomationCard({ automation }: { automation: PortfolioAutomation }) {
         )}
       </div>
 
-      {workflow && (
+      {(workflow || guide) && (
         <div className="flex flex-wrap items-center gap-2.5 border-t border-border/60 px-5 py-4">
-          <button
-            type="button"
-            onClick={copy}
-            className="inline-flex min-h-10 items-center rounded-full bg-primary px-4 text-[13px] font-semibold text-background transition-colors hover:bg-primary-hover"
-          >
-            {copied ? "Copied, paste it in n8n" : "Copy workflow"}
-          </button>
-          <button
-            type="button"
-            onClick={download}
-            className="inline-flex min-h-10 items-center rounded-full border border-border px-4 text-[13px] font-semibold text-ink transition-colors hover:border-primary hover:text-accent"
-          >
-            Download .json
-          </button>
+          {workflow && (
+            <>
+              <button
+                type="button"
+                onClick={copy}
+                className="inline-flex min-h-10 items-center rounded-full bg-primary px-4 text-[13px] font-semibold text-background transition-colors hover:bg-primary-hover"
+              >
+                {copied ? "Copied, paste it in n8n" : "Copy workflow"}
+              </button>
+              <button
+                type="button"
+                onClick={download}
+                className="inline-flex min-h-10 items-center rounded-full border border-border px-4 text-[13px] font-semibold text-ink transition-colors hover:border-primary hover:text-accent"
+              >
+                Download .json
+              </button>
+            </>
+          )}
           {failed && (
             <span className="font-mono text-[11px] text-primary">
               Copy blocked. Use Download instead.
             </span>
+          )}
+          {guide && (
+            <a
+              href={guide}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-10 items-center gap-1.5 text-[13px] font-medium text-ink-soft transition-colors hover:text-accent sm:ml-auto"
+            >
+              Watch the walkthrough
+              <IconeExterne />
+            </a>
           )}
         </div>
       )}
@@ -206,6 +245,45 @@ export default function AutomationsSection() {
       cancelled = true;
     };
   }, []);
+
+  // Lien direct vers un scenario, du type /portfolio#a-invoice-reminder, envoye
+  // dans une candidature. Le navigateur ne peut pas resoudre l'ancre tout seul :
+  // au moment ou il lit l'URL la liste n'est pas chargee et la carte n'existe
+  // pas. On descend donc nous-memes, une fois le rendu fait.
+  useEffect(() => {
+    if (status !== "ready" || automations.length === 0) return;
+    const brut = window.location.hash;
+    if (!brut.startsWith("#a-")) return;
+    const cle = decodeURIComponent(brut.slice(3));
+    if (!automations.some((a) => ancre(a) === cle)) return;
+    const carte = document.getElementById(`a-${cle}`);
+    if (!carte) return;
+
+    const anime = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    carte.scrollIntoView({ behavior: anime ? "smooth" : "auto", block: "center" });
+
+    // L'eclat attend que la carte soit arrivee au centre. Un defilement fluide
+    // dure plus longtemps que l'animation, et elle serait deja eteinte a
+    // l'arrivee. La marge negative reduit la zone de detection a la bande
+    // centrale, ce qui reste vrai meme si la carte depasse la hauteur de l'ecran.
+    let t = 0;
+    const vue = new IntersectionObserver(
+      (entrees) => {
+        if (!entrees.some((e) => e.isIntersecting)) return;
+        vue.disconnect();
+        carte.classList.add("pf-flash");
+        t = window.setTimeout(() => carte.classList.remove("pf-flash"), 2600);
+      },
+      { rootMargin: "-25% 0px -25% 0px" }
+    );
+    vue.observe(carte);
+
+    return () => {
+      vue.disconnect();
+      if (t) clearTimeout(t);
+      carte.classList.remove("pf-flash");
+    };
+  }, [status, automations]);
 
   // Rien de publie, rien a montrer : la section disparait plutot que d'afficher
   // un bloc vide sur une page destinee a convaincre.

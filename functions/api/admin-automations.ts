@@ -102,10 +102,36 @@ function toRow(body: Record<string, unknown>): Record<string, unknown> | { erreu
     description: text(body.description, 2000),
     tools: list(body.tools),
     image_url: link(body.image_url),
+    guide_url: link(body.guide_url),
     workflow_json: wf.json,
     node_count: wf.nodes,
     published: body.published === true,
   };
+}
+
+function slugifier(nom: string): string {
+  return (
+    nom
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .slice(0, 60)
+      .replace(/^-+|-+$/g, "") || "scenario"
+  );
+}
+
+// Le slug n'est calcule qu'a la creation. Un renommage ne le touche pas : les
+// liens deja envoyes dans une candidature doivent continuer a pointer sur la
+// bonne carte.
+async function slugLibre(env: Env, nom: string): Promise<string> {
+  const base = slugifier(nom);
+  const existants = await sbSelect<{ slug: string | null }>(env, TABLE, "select=slug");
+  const pris = new Set(existants.map((e) => e.slug).filter(Boolean));
+  if (!pris.has(base)) return base;
+  let n = 2;
+  while (pris.has(`${base}-${n}`)) n += 1;
+  return `${base}-${n}`;
 }
 
 export async function onRequestGet(context: RequestContext): Promise<Response> {
@@ -155,8 +181,9 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
     "select=position&order=position.desc&limit=1"
   );
   const nextPosition = existing.length ? (existing[0].position ?? 0) + 1 : 0;
+  const slug = await slugLibre(context.env, row.name as string);
 
-  const created = await sbInsert(context.env, TABLE, { ...row, position: nextPosition });
+  const created = await sbInsert(context.env, TABLE, { ...row, slug, position: nextPosition });
   if (!created) return json({ ok: false, error: "create_failed" }, 500);
 
   return json({ ok: true, automation: created }, 201);

@@ -12,12 +12,14 @@ import { useEffect, useMemo, useState } from "react";
 interface Automation {
   id: string;
   position: number;
+  slug: string | null;
   published: boolean;
   name: string;
   summary: string | null;
   description: string | null;
   tools: string[];
   image_url: string | null;
+  guide_url: string | null;
   workflow_json: string | null;
   node_count: number | null;
 }
@@ -25,12 +27,14 @@ interface Automation {
 const EMPTY: Automation = {
   id: "",
   position: 0,
+  slug: null,
   published: false,
   name: "",
   summary: "",
   description: "",
   tools: [],
   image_url: "",
+  guide_url: "",
   workflow_json: "",
   node_count: null,
 };
@@ -105,6 +109,11 @@ function AutomationForm({
 
   const lecture = useMemo(() => lireWorkflow(workflowText), [workflowText]);
 
+  // Le serveur ecarte en silence une adresse sans protocole. On le dit ici
+  // plutot que de laisser le lien disparaitre apres l'enregistrement.
+  const guideBrut = (a.guide_url ?? "").trim();
+  const guideInvalide = guideBrut !== "" && !/^https?:\/\//i.test(guideBrut);
+
   const uploadImage = async (file: File) => {
     setUploading(true);
     setError(null);
@@ -147,6 +156,10 @@ function AutomationForm({
           ? "Le workflow colle n'est pas un JSON valide."
           : "Ce JSON ne ressemble pas a un export n8n. Il doit contenir une liste nodes."
       );
+      return;
+    }
+    if (guideInvalide) {
+      setError("Le lien de guide doit commencer par https://.");
       return;
     }
     setSaving(true);
@@ -229,6 +242,25 @@ function AutomationForm({
             onChange={(e) => setToolsText(e.target.value)}
             className={inputClass}
           />
+        </Field>
+
+        <Field
+          label="Lien de guide"
+          help="Facultatif. Loom, video ou page de demonstration. Ajoute le lien Watch the walkthrough sur la carte, ouvert dans un nouvel onglet."
+        >
+          <input
+            type="url"
+            value={a.guide_url ?? ""}
+            placeholder="https://www.loom.com/share/..."
+            onChange={(e) => set("guide_url", e.target.value)}
+            className={inputClass}
+          />
+          {guideInvalide && (
+            <p className="mt-2 text-sm text-red-400">
+              L&apos;adresse doit commencer par https://, sinon le lien ne sera pas
+              enregistre.
+            </p>
+          )}
         </Field>
 
         {/* Workflow n8n */}
@@ -383,6 +415,22 @@ export default function AdminAutomations() {
   const [editing, setEditing] = useState<Automation | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<Automation | null>(null);
   const [busy, setBusy] = useState(false);
+  const [lienCopie, setLienCopie] = useState<{ id: string; ok: boolean } | null>(null);
+
+  // Lien a coller dans une candidature. Il ouvre /portfolio, descend sur ce
+  // scenario et le fait clignoter une fois.
+  const copierLien = async (item: Automation) => {
+    if (!item.slug) return;
+    const url = `${window.location.origin}/portfolio#a-${item.slug}`;
+    let ok = true;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      ok = false;
+    }
+    setLienCopie({ id: item.id, ok });
+    setTimeout(() => setLienCopie(null), 2400);
+  };
 
   const load = async () => {
     try {
@@ -541,11 +589,35 @@ export default function AdminAutomations() {
                       Sans workflow
                     </span>
                   )}
+                  {item.guide_url && (
+                    <span className="rounded-full bg-surface-muted px-2 py-0.5 text-[11px] text-ink-faint">
+                      Guide
+                    </span>
+                  )}
                 </div>
                 {item.summary && (
                   <p className="line-clamp-2 text-sm [overflow-wrap:anywhere] text-ink-soft">
                     {item.summary}
                   </p>
+                )}
+
+                {item.slug && (
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <code className="max-w-full truncate rounded bg-surface-muted px-1.5 py-0.5 font-mono text-[11px] text-ink-faint">
+                      /portfolio#a-{item.slug}
+                    </code>
+                    <button
+                      type="button"
+                      onClick={() => void copierLien(item)}
+                      className="text-[11px] font-medium text-ink-soft underline-offset-2 transition-colors hover:text-primary hover:underline"
+                    >
+                      {lienCopie?.id === item.id
+                        ? lienCopie.ok
+                          ? "Lien copie"
+                          : "Copie refusee par le navigateur"
+                        : "Copier le lien direct"}
+                    </button>
+                  </div>
                 )}
               </div>
 

@@ -18,11 +18,13 @@ interface RequestContext {
 const PUBLIC_FIELDS = [
   "id",
   "position",
+  "slug",
   "name",
   "summary",
   "description",
   "tools",
   "image_url",
+  "guide_url",
   "workflow_json",
   "node_count",
 ].join(",");

@@ -226,6 +226,33 @@
   background: var(--color-background);
 }
 
+/* Scenario ouvert depuis un lien direct. Deux pulsations dorees le temps que le
+   regard se pose, sans toucher a la bordure de la carte pour ne rien deplacer. */
+@keyframes pf-flash {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 168, 71, 0);
+  }
+  18%,
+  68% {
+    box-shadow:
+      0 0 0 3px rgba(212, 168, 71, 0.42),
+      0 0 34px rgba(212, 168, 71, 0.16);
+  }
+  43% {
+    box-shadow: 0 0 0 1px rgba(212, 168, 71, 0.14);
+  }
+}
+.pf-flash {
+  animation: pf-flash 2.4s ease-in-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-flash {
+    animation: none;
+    box-shadow: 0 0 0 2px rgba(212, 168, 71, 0.4);
+  }
+}
+
 /* Visuel de repli quand un projet n'a pas d'image. Motif abstrait dore, dans
    l'esprit des placeholders deja utilises sur la page d'accueil. */
 .pf-abstract {

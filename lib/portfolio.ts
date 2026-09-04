@@ -64,11 +64,13 @@ export interface PortfolioProject {
 export interface PortfolioAutomation {
   id: string;
   position: number;
+  slug: string | null;
   name: string;
   summary: string | null;
   description: string | null;
   tools: string[];
   image_url: string | null;
+  guide_url: string | null;
   workflow_json: string | null;
   node_count: number | null;
 }

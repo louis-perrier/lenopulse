@@ -19,8 +19,19 @@ export const portfolioConfig = {
 
   capabilities: [
     { group: "Frontend", items: ["Next.js", "React", "TypeScript", "Tailwind CSS"] },
-    { group: "Backend", items: ["Node.js", "Python", "FastAPI", "REST APIs"] },
-    { group: "Data", items: ["PostgreSQL", "Supabase", "RAG over documents"] },
+    {
+      group: "Backend",
+      items: [
+        "Node.js",
+        "Python",
+        "Django",
+        "Django admin",
+        "FastAPI",
+        "REST APIs",
+        "Role based access",
+      ],
+    },
+    { group: "Data", items: ["PostgreSQL", "Supabase", "SQLite", "RAG over documents"] },
     { group: "AI", items: ["Anthropic Claude", "OpenAI", "AI agents", "Vapi", "Deepgram"] },
     { group: "Automation", items: ["n8n", "Webhooks", "Scheduled jobs", "Twilio"] },
     { group: "Infrastructure", items: ["Cloudflare Workers", "Vercel", "Stripe"] },

@@ -49,8 +49,9 @@ function AutomationCard({ automation }: { automation: PortfolioAutomation }) {
           />
         </div>
       ) : (
+        // Meme hauteur que la capture, sinon le titre remonte et desaligne la rangee.
         <div
-          className="pf-abstract aspect-[21/9] max-h-32 border-b border-border"
+          className="pf-abstract aspect-[16/9] max-h-40 border-b border-border"
           aria-hidden="true"
         />
       )}

@@ -116,11 +116,16 @@ export function lienDirect(a: PortfolioAutomation): string {
 // environ 200 ko de PNG, pour etre affichees sur 160 px de haut. Le point de
 // rendu de Storage les redimensionne et les sert en WebP a la volee, ce qui
 // evite d'avoir a reuploader quoi que ce soit. Une URL qui ne vient pas de
-// Storage est renvoyee intacte.
+// Storage est renvoyee intacte. `resize=contain` n'est pas optionnel : sans lui
+// le point de rendu garde la hauteur d'origine et rogne la largeur, il repond
+// 640x1080 pour une source 1920x1080.
 export function imageRedimensionnee(url: string, largeur: number): string {
   const objet = "/storage/v1/object/public/";
   if (!url.includes(objet)) return url;
-  return `${url.replace(objet, "/storage/v1/render/image/public/")}?width=${largeur}&quality=75`;
+  return `${url.replace(
+    objet,
+    "/storage/v1/render/image/public/"
+  )}?width=${largeur}&resize=contain&quality=75`;
 }
 
 // La description n'est pas affichee dans le catalogue mais reste cherchable :

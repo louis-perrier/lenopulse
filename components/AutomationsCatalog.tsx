@@ -54,7 +54,6 @@ function LigneCatalogue({ a }: { a: PortfolioAutomation }) {
     useAutomationActions(a);
 
   const reste = a.tools.length - 5;
-  const echec = etatCopie === "echec" || etatPartage === "echec";
 
   return (
     <li className="grid grid-cols-[auto_1fr] items-start gap-3 rounded-xl border border-border bg-surface p-3 sm:grid-cols-[auto_1fr_auto]">
@@ -94,9 +93,14 @@ function LigneCatalogue({ a }: { a: PortfolioAutomation }) {
           </div>
         )}
 
-        {echec && (
+        {etatCopie === "echec" && (
           <p className="mt-2 font-mono text-[11px] text-primary">
-            Copy blocked by your browser. Use the download button.
+            Copy blocked. Use the download button.
+          </p>
+        )}
+        {etatPartage === "echec" && (
+          <p className="mt-2 font-mono text-[11px] text-primary">
+            Link copy blocked by your browser.
           </p>
         )}
       </div>

@@ -11,6 +11,7 @@ import {
 } from "@/lib/automations";
 import {
   IconeCheck,
+  IconeChevron,
   IconeCopie,
   IconeFermer,
   IconeJouer,
@@ -61,7 +62,12 @@ function LigneCatalogue({ a }: { a: PortfolioAutomation }) {
   const { workflow, guide, etatCopie, etatPartage, copierWorkflow, telecharger, partager } =
     useAutomationActions(a);
 
-  const reste = a.tools.length - 5;
+  // La description n'a de place ni sur la carte ni sur la ligne. Elle est
+  // repliee ici plutot que dans une seconde fenetre par-dessus le catalogue.
+  const [deplie, setDeplie] = useState(false);
+  const depliable = Boolean(a.description) || a.tools.length > 5;
+  const outils = deplie ? a.tools : a.tools.slice(0, 5);
+  const reste = a.tools.length - outils.length;
 
   return (
     <li className="grid grid-cols-[auto_1fr] items-start gap-3 rounded-xl border border-border bg-surface p-3 sm:grid-cols-[auto_1fr_auto]">
@@ -69,23 +75,52 @@ function LigneCatalogue({ a }: { a: PortfolioAutomation }) {
 
       <div className="min-w-0">
         <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <span className="text-[15px] font-semibold [overflow-wrap:anywhere] text-ink">
-            {a.name}
-          </span>
+          {depliable ? (
+            <button
+              type="button"
+              onClick={() => setDeplie((p) => !p)}
+              aria-expanded={deplie}
+              title={deplie ? "Hide the details" : "Show what this automation does"}
+              className="group inline-flex items-center gap-1.5 py-1 text-left"
+            >
+              <span className="text-[15px] font-semibold [overflow-wrap:anywhere] text-ink transition-colors group-hover:text-primary">
+                {a.name}
+              </span>
+              <IconeChevron
+                className={`h-3.5 w-3.5 flex-none text-ink-faint transition-transform group-hover:text-primary ${
+                  deplie ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+          ) : (
+            <span className="py-1 text-[15px] font-semibold [overflow-wrap:anywhere] text-ink">
+              {a.name}
+            </span>
+          )}
           {a.node_count !== null && (
             <span className="font-mono text-[11px] text-ink-faint">{a.node_count} nodes</span>
           )}
         </div>
 
         {a.summary && (
-          <p className="mt-0.5 line-clamp-2 text-[13px] [overflow-wrap:anywhere] text-ink-soft">
+          <p
+            className={`text-[13px] [overflow-wrap:anywhere] text-ink-soft ${
+              deplie ? "" : "line-clamp-2"
+            }`}
+          >
             {a.summary}
+          </p>
+        )}
+
+        {deplie && a.description && (
+          <p className="mt-2 border-l border-primary/30 pl-3 text-[13px] leading-relaxed [overflow-wrap:anywhere] text-ink-soft">
+            {a.description}
           </p>
         )}
 
         {a.tools.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-1.5">
-            {a.tools.slice(0, 5).map((t) => (
+            {outils.map((t) => (
               <span
                 key={t}
                 className="max-w-full truncate rounded border border-border px-1.5 py-0.5 font-mono text-[10px] text-ink-soft"

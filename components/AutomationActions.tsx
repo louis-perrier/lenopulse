@@ -75,6 +75,14 @@ export function IconeLoupe(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function IconeChevron(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base} {...props}>
+      <path d="m7 10 5 5 5-5" />
+    </svg>
+  );
+}
+
 export function IconeFermer(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base} {...props}>

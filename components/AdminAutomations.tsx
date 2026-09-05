@@ -22,6 +22,9 @@ interface Automation {
   guide_url: string | null;
   workflow_json: string | null;
   node_count: number | null;
+  // Sert ici seulement. La liste publique ne la demande pas, voir PUBLIC_FIELDS
+  // dans functions/api/automations.ts.
+  created_at: string | null;
 }
 
 const EMPTY: Automation = {
@@ -37,6 +40,7 @@ const EMPTY: Automation = {
   guide_url: "",
   workflow_json: "",
   node_count: null,
+  created_at: null,
 };
 
 const inputClass =
@@ -159,6 +163,12 @@ function typeDemo(url: string): "Video" | "Loom" | "Guide" {
     // Adresse illisible : l'etiquette generique suffit.
   }
   return "Guide";
+}
+
+function dateCreation(iso: string | null): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? null : d.toLocaleDateString("fr-FR");
 }
 
 function IconeDemo() {
@@ -706,6 +716,11 @@ export default function AdminAutomations() {
                   {!item.workflow_json && (
                     <span className="rounded-full bg-surface-muted px-2 py-0.5 text-[11px] text-ink-faint">
                       Sans workflow
+                    </span>
+                  )}
+                  {dateCreation(item.created_at) && (
+                    <span className="rounded-full bg-surface-muted px-2 py-0.5 font-mono text-[11px] text-ink-faint">
+                      Cree le {dateCreation(item.created_at)}
                     </span>
                   )}
                 </div>

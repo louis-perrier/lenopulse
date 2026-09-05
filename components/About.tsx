@@ -24,7 +24,7 @@ export default function About({ dict }: { dict: Dictionary }) {
     <section
       id="about"
       ref={sectionRef}
-      className="relative section-light overflow-hidden"
+      className="relative section-dark overflow-hidden"
     >
       <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 sm:py-32 lg:grid-cols-2">
         <Reveal direction="left">

@@ -1,23 +1,28 @@
 @import "tailwindcss";
 
-/* Palette A (Noir + Or). Definie en tokens Tailwind v4 via @theme.
+/* Palette A (Ivoire + Or). Definie en tokens Tailwind v4 via @theme.
    Chaque variable --color-* genere les utilitaires correspondants
-   (bg-*, text-*, border-*). */
+   (bg-*, text-*, border-*).
+
+   Sur fond clair l'or doit s'assombrir pour rester lisible : #d4a847 ne passe
+   pas 3:1 sur de l'ivoire. Le doré vif ne survit que dans le decor (halos,
+   liserés, grain), ou l'alpha compte plus que le contraste, et dans les blocs
+   .section-dark. */
 @theme {
-  --color-background: #0a0a0f;
-  --color-surface: #111118;
-  --color-surface-raised: #18181f;
-  --color-surface-muted: #1f1f28;
-  --color-border: #2a2a35;
-  --color-border-strong: #4a4535;
+  --color-background: #f6f1e7;
+  --color-surface: #fdfbf6;
+  --color-surface-raised: #ffffff;
+  --color-surface-muted: #ece4d4;
+  --color-border: #ddd1b9;
+  --color-border-strong: #c3ab7d;
 
-  --color-ink: #f5f0e8;
-  --color-ink-soft: #9a9080;
-  --color-ink-faint: #4a4540;
+  --color-ink: #1f160b;
+  --color-ink-soft: #5f5039;
+  --color-ink-faint: #7a6849;
 
-  --color-primary: #d4a847;
-  --color-primary-hover: #b8892e;
-  --color-accent: #f0c866;
+  --color-primary: #8a5f16;
+  --color-primary-hover: #5a3c0b;
+  --color-accent: #6f4b12;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
@@ -27,6 +32,24 @@
 }
 
 @layer base {
+  /* Reglages du decor dore. Ils ne sont pas dans @theme : ce ne sont pas des
+     couleurs d'interface mais des intensites, et .section-dark les rejoue. */
+  :root {
+    color-scheme: light;
+    --deco-gold: 212 168 71;
+    --deco-halo: 0.4;
+    --deco-halo-mid: 0.16;
+    --deco-hairline: 0.85;
+    --deco-spot: 0.22;
+    --deco-rule: 0.62;
+    --deco-flash: 0.6;
+    --grain-opacity: 0.06;
+    --grain-blend: multiply;
+    --plate-from: #f3ead8;
+    --plate-to: #e8dfcd;
+    --shadow-lift: 0 18px 45px -22px rgb(60 45 20 / 0.35);
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -41,7 +64,7 @@
 
   ::selection {
     background: var(--color-primary);
-    color: #0a0a0f;
+    color: var(--color-surface-raised);
   }
 
   /* Decalage des ancres pour ne pas passer sous la nav fixe. */
@@ -55,11 +78,50 @@
   }
 
   /* Anneau de focus clavier visible. La couleur suit le token local, donc le
-     focus reste lisible aussi sur les sections claires (.section-light). */
+     focus reste lisible aussi sur les blocs sombres (.section-dark). */
   :focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
+}
+
+/* Retour au noir et or. .theme-dark ne rejoue que les variables, pour un visuel
+   pose sur fond clair (plaque de logo, vignette de projet). .section-dark y
+   ajoute le fond et les filets, pour une bande pleine largeur. */
+.theme-dark,
+.section-dark {
+  color-scheme: dark;
+  --color-background: #0a0a0f;
+  --color-surface: #111118;
+  --color-surface-raised: #18181f;
+  --color-surface-muted: #1f1f28;
+  --color-border: #2a2a35;
+  --color-border-strong: #4a4535;
+  --color-ink: #f5f0e8;
+  --color-ink-soft: #9a9080;
+  --color-ink-faint: #7c766a;
+  --color-primary: #d4a847;
+  --color-primary-hover: #b8892e;
+  --color-accent: #f0c866;
+
+  --deco-halo: 0.22;
+  --deco-halo-mid: 0.08;
+  --deco-hairline: 0.55;
+  --deco-spot: 0.16;
+  --deco-rule: 0.5;
+  --deco-flash: 0.42;
+  --grain-opacity: 0.045;
+  --grain-blend: normal;
+  --plate-from: #14100a;
+  --plate-to: #0d0d13;
+  --shadow-lift: 0 18px 50px -24px rgb(var(--deco-gold) / 0.45);
+}
+
+.section-dark {
+  background-color: var(--color-background);
+  color: var(--color-ink);
+  border-top: 1px solid rgb(var(--deco-gold) / 0.45);
+  border-bottom: 1px solid rgb(var(--deco-gold) / 0.45);
 }
 
 /* Titre en degrade or. */
@@ -79,18 +141,20 @@
 .glow-gold {
   background: radial-gradient(
     circle at center,
-    rgba(212, 168, 71, 0.22) 0%,
-    rgba(212, 168, 71, 0.08) 35%,
-    rgba(212, 168, 71, 0) 70%
+    rgb(var(--deco-gold) / var(--deco-halo)) 0%,
+    rgb(var(--deco-gold) / var(--deco-halo-mid)) 35%,
+    rgb(var(--deco-gold) / 0) 70%
   );
 }
 
-/* Grain subtil pour casser les aplats et donner du relief. */
+/* Grain subtil pour casser les aplats et donner du relief. Le bruit est clair :
+   sur fond ivoire il faut le passer en multiply, sinon il ne se voit plus. */
 .grain {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.045;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -107,8 +171,8 @@
   padding: 1px;
   background: linear-gradient(
     140deg,
-    rgba(240, 200, 102, 0.55),
-    rgba(212, 168, 71, 0) 45%
+    rgb(var(--deco-gold) / var(--deco-hairline)),
+    rgb(var(--deco-gold) / 0) 45%
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -121,26 +185,6 @@
 }
 .card-hairline:hover::after {
   opacity: 1;
-}
-
-/* Section en rupture claire. Redefinit localement les tokens de couleur : tous
-   les utilitaires (text-ink, bg-surface, border-border, degrade or...) presents
-   dans les composants enfants basculent automatiquement en version claire. */
-.section-light {
-  --color-background: #efe7d6;
-  --color-surface: #f7f1e6;
-  --color-surface-raised: #fffdf8;
-  --color-border: #ddd0b8;
-  --color-border-strong: #c9b487;
-  --color-ink: #1f160b;
-  --color-ink-soft: #6c5d46;
-  --color-ink-faint: #9c8b6f;
-  --color-primary: #a8761f;
-  --color-primary-hover: #8a5f16;
-  --color-accent: #c2922f;
-  background-color: var(--color-background);
-  color: var(--color-ink);
-  border-top: 1px solid rgba(212, 168, 71, 0.45);
 }
 
 /* Lueur doree qui suit le curseur (cartes Expertise et Realisations). La position
@@ -156,7 +200,7 @@
   transition: opacity 0.4s ease;
   background: radial-gradient(
     14rem 14rem at var(--mx, 50%) var(--my, 50%),
-    rgba(240, 200, 102, 0.16),
+    rgb(var(--deco-gold) / var(--deco-spot)),
     transparent 65%
   );
 }
@@ -188,7 +232,7 @@
   }
 }
 
-/* Page /portfolio. Meme marque (noir et or) que le site, mais registre
+/* Page /portfolio. Meme marque (ivoire et or) que le site, mais registre
    plus dense et plus technique : chasse fixe pour les donnees, tuiles de
    tailles inegales, filets fins. Concue mobile d'abord. */
 
@@ -197,20 +241,20 @@
   height: 1px;
   background: linear-gradient(
     90deg,
-    rgba(212, 168, 71, 0.5),
-    rgba(212, 168, 71, 0.05) 60%,
+    rgb(var(--deco-gold) / var(--deco-rule)),
+    rgb(var(--deco-gold) / 0.05) 60%,
     transparent
   );
 }
 
-/* Couture entre le dernier bloc sombre et la section claire. La lumiere monte
-   vers le filet or de .section-light, qui reste la seule ligne franche. */
+/* Couture entre le dernier bloc de la page et la bande sombre. La lumiere monte
+   vers le filet or de .section-dark, qui reste la seule ligne franche. */
 .pf-seam {
   position: relative;
   height: 3.5rem;
   background: radial-gradient(
     70% 120% at 50% 100%,
-    rgba(212, 168, 71, 0.12),
+    rgb(var(--deco-gold) / 0.16),
     transparent 72%
   );
 }
@@ -222,7 +266,7 @@
   width: 9px;
   height: 9px;
   transform: translateX(-50%) rotate(45deg);
-  border: 1px solid rgba(212, 168, 71, 0.5);
+  border: 1px solid rgb(var(--deco-gold) / 0.5);
   background: var(--color-background);
 }
 
@@ -231,16 +275,16 @@
 @keyframes pf-flash {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(212, 168, 71, 0);
+    box-shadow: 0 0 0 0 rgb(var(--deco-gold) / 0);
   }
   18%,
   68% {
     box-shadow:
-      0 0 0 3px rgba(212, 168, 71, 0.42),
-      0 0 34px rgba(212, 168, 71, 0.16);
+      0 0 0 3px rgb(var(--deco-gold) / var(--deco-flash)),
+      0 0 34px rgb(var(--deco-gold) / 0.16);
   }
   43% {
-    box-shadow: 0 0 0 1px rgba(212, 168, 71, 0.14);
+    box-shadow: 0 0 0 1px rgb(var(--deco-gold) / 0.14);
   }
 }
 .pf-flash {
@@ -249,7 +293,7 @@
 @media (prefers-reduced-motion: reduce) {
   .pf-flash {
     animation: none;
-    box-shadow: 0 0 0 2px rgba(212, 168, 71, 0.4);
+    box-shadow: 0 0 0 2px rgb(var(--deco-gold) / 0.5);
   }
 }
 
@@ -259,11 +303,17 @@
   background:
     repeating-linear-gradient(
       90deg,
-      rgba(212, 168, 71, 0.16) 0 2px,
+      rgb(var(--deco-gold) / 0.2) 0 2px,
       transparent 2px 14px
     ),
-    radial-gradient(120% 90% at 20% 10%, rgba(212, 168, 71, 0.18), transparent 60%),
-    linear-gradient(160deg, #14100a, #0d0d13);
+    radial-gradient(120% 90% at 20% 10%, rgb(var(--deco-gold) / 0.22), transparent 60%),
+    linear-gradient(160deg, var(--plate-from), var(--plate-to));
+}
+
+/* Plaque de fond des logos clients. Ils ont ete deposes sur du sombre, donc
+   elle le reste sur fond clair : un logo blanc disparaitrait sur de l'ivoire. */
+.pf-plate {
+  background: linear-gradient(to bottom right, #1a1508, #0f0f16);
 }
 
 /* Fiche detaillee : feuille remontante sur telephone, panneau lateral sur

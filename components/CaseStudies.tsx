@@ -34,7 +34,7 @@ export default function CaseStudies({ dict }: { dict: Dictionary }) {
                 type="button"
                 onClick={() => setSelected({ item, index: i })}
                 onPointerMove={trackSpotlight}
-                className="card-hairline group block h-full w-full overflow-hidden rounded-2xl border border-border bg-surface text-left transition duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-[0_18px_50px_-24px_rgba(212,168,71,0.45)]"
+                className="card-hairline group block h-full w-full overflow-hidden rounded-2xl border border-border bg-surface text-left transition duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-[var(--shadow-lift)]"
               >
                 <span aria-hidden className="spotlight-layer" />
                 <CaseVisual item={item} index={i} className="h-40 w-full" />

@@ -60,7 +60,7 @@ export default function ContactLauncher({ dict }: { dict: Dictionary }) {
         <div
           role="dialog"
           aria-label={a.kicker}
-          className="flex w-[calc(100vw-2.5rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-lg shadow-black/40 sm:w-[22rem]"
+          className="flex w-[calc(100vw-2.5rem)] max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-lg shadow-ink/20 sm:w-[22rem]"
         >
           {/* En-tete */}
           <div className="flex items-center justify-between border-b border-border px-4 py-3">
@@ -162,7 +162,7 @@ export default function ContactLauncher({ dict }: { dict: Dictionary }) {
         aria-expanded={open}
         aria-haspopup="dialog"
         aria-label={open ? dict.common.close : l.open}
-        className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary text-background shadow-lg shadow-black/40 transition-colors hover:bg-primary-hover"
+        className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary text-background shadow-lg shadow-ink/20 transition-colors hover:bg-primary-hover"
       >
         {open ? <IconClose className="h-6 w-6" /> : <IconChat className="h-6 w-6" />}
       </button>

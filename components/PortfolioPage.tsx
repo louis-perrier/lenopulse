@@ -62,7 +62,7 @@ function Shot({
   if (project.image_url && project.image_kind === "logo") {
     return (
       <div
-        className={`${box} flex items-center justify-center overflow-hidden border-b border-border bg-gradient-to-br from-[#1a1508] to-[#0f0f16] p-[12%]`}
+        className={`${box} pf-plate flex items-center justify-center overflow-hidden border-b border-border p-[12%]`}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -220,7 +220,7 @@ function Sheet({
       <div
         onClick={onClose}
         aria-hidden="true"
-        className={`fixed inset-0 z-90 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-90 bg-ink/45 backdrop-blur-sm transition-opacity duration-300 ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
@@ -508,7 +508,7 @@ export default function PortfolioPage() {
                       loading="lazy"
                       className={`h-12 w-16 flex-none rounded-lg border border-border ${
                         p.image_kind === "logo"
-                          ? "bg-gradient-to-br from-[#1a1508] to-[#0f0f16] object-contain p-2"
+                          ? "pf-plate object-contain p-2"
                           : "object-cover"
                       }`}
                     />
@@ -555,11 +555,11 @@ export default function PortfolioPage() {
 
       <div className="pf-seam" aria-hidden="true" />
 
-      {/* Capacites techniques. Seule section en rupture claire : elle casse le
-          bloc sombre du bas de page, comme Process et A propos sur la home. Les
-          tokens de couleur sont redefinis localement par .section-light, donc les
-          utilitaires des enfants basculent tout seuls. */}
-      <section className="section-light">
+      {/* Capacites techniques. Seule bande en rupture sombre de la page, comme
+          Process et A propos sur la home. Les tokens de couleur sont redefinis
+          localement par .section-dark, donc les utilitaires des enfants
+          basculent tout seuls. */}
+      <section className="section-dark">
         <div className="mx-auto max-w-[1180px] px-5 py-11 sm:px-8 sm:py-16">
           <h2 className="pb-5.5 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
             Capabilities

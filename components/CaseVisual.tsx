@@ -5,6 +5,8 @@ import { workAssets } from "@/lib/site";
 // Visuel d'une realisation. Affiche la vraie capture quand elle existe dans
 // workAssets (lib/site.ts), sinon un placeholder abstrait (monogramme dore sur
 // fond sombre), sans fausse capture. Sert dans la carte et dans la modale.
+// Les placeholders portent theme-dark : la page est claire, mais eux restent
+// noir et or, donc leurs enfants doivent lire les tokens sombres.
 const palettes = [
   "from-[#241a06] to-[#0b0a07]",
   "from-[#1c1707] to-[#0a0a0f]",
@@ -25,7 +27,7 @@ export default function CaseVisual({ item, index, className = "" }: CaseVisualPr
 
   if (asset?.image) {
     return (
-      <div className={`relative overflow-hidden ${className}`} aria-hidden>
+      <div className={`theme-dark relative overflow-hidden ${className}`} aria-hidden>
         <Image
           src={asset.image}
           alt=""
@@ -33,7 +35,7 @@ export default function CaseVisual({ item, index, className = "" }: CaseVisualPr
           sizes="(min-width: 1024px) 24rem, (min-width: 640px) 50vw, 100vw"
           className="object-cover"
         />
-        <span className="absolute bottom-3 left-3 rounded-full border border-primary/30 bg-background/60 px-2.5 py-1 text-[11px] font-medium text-primary backdrop-blur-sm">
+        <span className="absolute bottom-3 left-3 rounded-full border border-primary/30 bg-background/85 px-2.5 py-1 text-[11px] font-medium text-primary backdrop-blur-sm">
           {item.tag}
         </span>
       </div>
@@ -45,7 +47,7 @@ export default function CaseVisual({ item, index, className = "" }: CaseVisualPr
   if (asset?.logo) {
     return (
       <div
-        className={`relative overflow-hidden bg-linear-to-br ${grad} ${className}`}
+        className={`theme-dark relative overflow-hidden bg-linear-to-br ${grad} ${className}`}
         aria-hidden
       >
         <div className="grain" />
@@ -67,7 +69,7 @@ export default function CaseVisual({ item, index, className = "" }: CaseVisualPr
 
   return (
     <div
-      className={`relative overflow-hidden bg-linear-to-br ${grad} ${className}`}
+      className={`theme-dark relative overflow-hidden bg-linear-to-br ${grad} ${className}`}
       aria-hidden
     >
       <div className="grain" />

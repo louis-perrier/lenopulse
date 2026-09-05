@@ -30,7 +30,7 @@ export default function Skills({ dict }: { dict: Dictionary }) {
               <Reveal key={item.title} delay={i * 0.07} direction="scale">
                 <article
                   onPointerMove={trackSpotlight}
-                  className="card-hairline group h-full rounded-2xl border border-border bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-[0_18px_50px_-24px_rgba(212,168,71,0.45)]"
+                  className="card-hairline group h-full rounded-2xl border border-border bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-border-strong hover:shadow-[var(--shadow-lift)]"
                 >
                   <span aria-hidden className="spotlight-layer" />
                   <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-border-strong bg-surface-raised text-primary transition-colors group-hover:bg-primary group-hover:text-background">

@@ -374,7 +374,7 @@ export default function AutomationsCatalog({
       <div
         onClick={onClose}
         aria-hidden="true"
-        className={`fixed inset-0 z-90 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-90 bg-ink/45 backdrop-blur-sm transition-opacity duration-300 ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
@@ -424,7 +424,7 @@ export default function AutomationsCatalog({
               value={tri}
               onChange={(e) => changerTri(e.target.value as TriAutomations)}
               aria-label="Sort automations"
-              className="min-h-11 rounded-full border border-border bg-surface-muted px-3 text-sm text-ink transition-colors [color-scheme:dark] focus:border-primary"
+              className="min-h-11 rounded-full border border-border bg-surface-muted px-3 text-sm text-ink transition-colors focus:border-primary"
             >
               <option value="position">Curated order</option>
               <option value="az">A to Z</option>

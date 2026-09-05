@@ -9,7 +9,7 @@ export default function Process({ dict }: { dict: Dictionary }) {
   const p = dict.process;
 
   return (
-    <section id="process" className="relative section-light">
+    <section id="process" className="relative section-dark">
       <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
         <div className="max-w-2xl">
           <h2 className="font-display text-3xl font-semibold leading-tight tracking-tight text-ink sm:text-4xl">

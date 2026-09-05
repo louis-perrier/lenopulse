@@ -393,27 +393,31 @@ export default function AutomationsCatalog({
           </div>
 
           {facettes.length > 0 && (
-            <div
-              className={`mt-2.5 flex flex-wrap gap-2 ${
-                toutesFacettes ? "max-h-32 overflow-y-auto" : ""
-              }`}
-            >
-              {[...cochees, ...visiblesFacettes].map((f) => (
-                <PastilleFiltre
-                  key={f.nom}
-                  actif={outils.includes(f.nom)}
-                  disabled={f.dispo === 0 && !outils.includes(f.nom)}
-                  onClick={() => basculerOutil(f.nom)}
-                >
-                  <span className="max-w-40 truncate">{f.nom}</span>
-                  <span className="ml-1.5 font-mono text-[10.5px] opacity-70">{f.dispo}</span>
-                </PastilleFiltre>
-              ))}
+            <div className="mt-2.5">
+              {/* La zone defile une fois depliee, le bouton de repli reste dehors
+                  sinon il sort du cadre et on ne sait plus revenir en arriere. */}
+              <div
+                className={`flex flex-wrap gap-2 ${
+                  toutesFacettes ? "max-h-32 overflow-y-auto pr-1" : ""
+                }`}
+              >
+                {[...cochees, ...visiblesFacettes].map((f) => (
+                  <PastilleFiltre
+                    key={f.nom}
+                    actif={outils.includes(f.nom)}
+                    disabled={f.dispo === 0 && !outils.includes(f.nom)}
+                    onClick={() => basculerOutil(f.nom)}
+                  >
+                    <span className="max-w-40 truncate">{f.nom}</span>
+                    <span className="ml-1.5 font-mono text-[10.5px] opacity-70">{f.dispo}</span>
+                  </PastilleFiltre>
+                ))}
+              </div>
               {(cacheesFacettes > 0 || toutesFacettes) && (
                 <button
                   type="button"
                   onClick={() => setToutesFacettes((p) => !p)}
-                  className="min-h-9 text-[12.5px] font-medium text-ink-soft underline-offset-2 transition-colors hover:text-primary hover:underline"
+                  className="mt-1.5 min-h-9 text-[12.5px] font-medium text-ink-soft underline-offset-2 transition-colors hover:text-primary hover:underline"
                 >
                   {toutesFacettes ? "Show fewer tools" : `+${cacheesFacettes} more tools`}
                 </button>

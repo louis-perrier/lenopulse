@@ -87,6 +87,88 @@ function lireWorkflow(brut: string): {
   }
 }
 
+// Le serveur coupe chaque etiquette a 40 caracteres et n'en garde que 12, sans
+// le signaler. On rejoue ici son decoupage pour montrer ce qui sera enregistre.
+const MAX_OUTILS = 12;
+const MAX_CAR_OUTIL = 40;
+
+// Une alternative annoncee est un outil a part entiere : un client sous Teams
+// doit trouver un scenario ecrit pour Slack. "Slack (or Teams, SMS)" donne donc
+// trois etiquettes, alors qu'une parenthese qui explique au lieu d'enumerer,
+// "Google Sheets (knowledge base you edit yourself)", est simplement retiree.
+export function eclaterOutils(brut: string): string[] {
+  const morceaux: string[] = [];
+  let courant = "";
+  let profondeur = 0;
+  for (const c of brut) {
+    if (c === "(") profondeur += 1;
+    else if (c === ")") profondeur = Math.max(0, profondeur - 1);
+    else if (c === "," && profondeur === 0) {
+      morceaux.push(courant);
+      courant = "";
+      continue;
+    }
+    courant += c;
+  }
+  morceaux.push(courant);
+
+  const brutes: string[] = [];
+  for (const morceau of morceaux) {
+    const t = morceau.trim();
+    if (!t) continue;
+    const paren = /^([^(]+)\(([^)]*)\)\s*$/.exec(t);
+    if (!paren) {
+      brutes.push(t);
+      continue;
+    }
+    brutes.push(paren[1].trim());
+    const dedans = paren[2].trim();
+    if (!/^(or|ou)\b/i.test(dedans)) continue;
+    for (const alt of dedans.replace(/^(or|ou)\b/i, "").split(",")) {
+      if (alt.trim()) brutes.push(alt.trim());
+    }
+  }
+
+  const vues = new Set<string>();
+  return brutes.filter((t) => {
+    const cle = t.toLowerCase();
+    if (!t || vues.has(cle)) return false;
+    vues.add(cle);
+    return true;
+  });
+}
+
+function lireOutils(brut: string): { gardes: string[]; perdus: string[]; longs: number } {
+  const tous = eclaterOutils(brut);
+  const gardes = tous.slice(0, MAX_OUTILS);
+  return {
+    gardes,
+    perdus: tous.slice(MAX_OUTILS),
+    longs: gardes.filter((t) => t.length > MAX_CAR_OUTIL).length,
+  };
+}
+
+// Une video ne se regarde pas comme une page. Le nom d'hote, pas l'URL entiere :
+// https://exemple.com/?u=youtube.com passerait un simple includes.
+function typeDemo(url: string): "Video" | "Loom" | "Guide" {
+  try {
+    const h = new URL(url).hostname.replace(/^www\./, "").toLowerCase();
+    if (h === "youtu.be" || h === "youtube.com" || h.endsWith(".youtube.com")) return "Video";
+    if (h === "loom.com" || h.endsWith(".loom.com")) return "Loom";
+  } catch {
+    // Adresse illisible : l'etiquette generique suffit.
+  }
+  return "Guide";
+}
+
+function IconeDemo() {
+  return (
+    <svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true">
+      <path d="M3 1.6 10.2 6 3 10.4z" fill="currentColor" />
+    </svg>
+  );
+}
+
 function AutomationForm({
   initial,
   onCancel,
@@ -108,6 +190,7 @@ function AutomationForm({
     setA((prev) => ({ ...prev, [key]: value }));
 
   const lecture = useMemo(() => lireWorkflow(workflowText), [workflowText]);
+  const outils = useMemo(() => lireOutils(toolsText), [toolsText]);
 
   // Le serveur ecarte en silence une adresse sans protocole. On le dit ici
   // plutot que de laisser le lien disparaitre apres l'enregistrement.
@@ -172,10 +255,7 @@ function AutomationForm({
         body: JSON.stringify({
           ...a,
           workflow_json: workflowText,
-          tools: toolsText
-            .split(",")
-            .map((t) => t.trim())
-            .filter(Boolean),
+          tools: eclaterOutils(toolsText),
         }),
       });
       if (!res.ok) {
@@ -234,7 +314,10 @@ function AutomationForm({
           />
         </Field>
 
-        <Field label="Outils" help="Separes par des virgules. Les 6 premiers sont affiches.">
+        <Field
+          label="Outils"
+          help="Separes par des virgules. Collez la stack d'un coup : Slack (or Teams, SMS) donne trois etiquettes, et une parenthese qui explique au lieu d'enumerer est retiree."
+        >
           <input
             type="text"
             value={toolsText}
@@ -242,6 +325,42 @@ function AutomationForm({
             onChange={(e) => setToolsText(e.target.value)}
             className={inputClass}
           />
+
+          {outils.gardes.length > 0 && (
+            <div className="mt-3">
+              <div className="flex flex-wrap gap-1.5">
+                {outils.gardes.map((t, i) => (
+                  <span
+                    key={`${t}-${i}`}
+                    className={`max-w-full truncate rounded border px-2 py-1 font-mono text-[10.5px] ${
+                      t.length > MAX_CAR_OUTIL
+                        ? "border-red-500/50 text-red-400"
+                        : "border-border text-ink-soft"
+                    }`}
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <p className="mt-2 text-xs text-ink-faint">
+                {outils.gardes.length} etiquette{outils.gardes.length > 1 ? "s" : ""}, telles
+                qu&apos;elles seront enregistrees. Les 6 premieres s&apos;affichent sur la carte.
+              </p>
+            </div>
+          )}
+
+          {outils.longs > 0 && (
+            <p className="mt-2 text-sm text-red-400">
+              Une etiquette est coupee a {MAX_CAR_OUTIL} caracteres. Celles en rouge seront
+              tronquees a l&apos;enregistrement.
+            </p>
+          )}
+          {outils.perdus.length > 0 && (
+            <p className="mt-2 text-sm text-red-400">
+              Seules les {MAX_OUTILS} premieres sont enregistrees. Non gardees :{" "}
+              {outils.perdus.join(", ")}.
+            </p>
+          )}
         </Field>
 
         <Field
@@ -589,11 +708,6 @@ export default function AdminAutomations() {
                       Sans workflow
                     </span>
                   )}
-                  {item.guide_url && (
-                    <span className="rounded-full bg-surface-muted px-2 py-0.5 text-[11px] text-ink-faint">
-                      Guide
-                    </span>
-                  )}
                 </div>
                 {item.summary && (
                   <p className="line-clamp-2 text-sm [overflow-wrap:anywhere] text-ink-soft">
@@ -601,22 +715,38 @@ export default function AdminAutomations() {
                   </p>
                 )}
 
-                {item.slug && (
+                {(item.slug || item.guide_url) && (
                   <div className="mt-2 flex flex-wrap items-center gap-2">
-                    <code className="max-w-full truncate rounded bg-surface-muted px-1.5 py-0.5 font-mono text-[11px] text-ink-faint">
-                      /portfolio#a-{item.slug}
-                    </code>
-                    <button
-                      type="button"
-                      onClick={() => void copierLien(item)}
-                      className="text-[11px] font-medium text-ink-soft underline-offset-2 transition-colors hover:text-primary hover:underline"
-                    >
-                      {lienCopie?.id === item.id
-                        ? lienCopie.ok
-                          ? "Lien copie"
-                          : "Copie refusee par le navigateur"
-                        : "Copier le lien direct"}
-                    </button>
+                    {item.slug && (
+                      <>
+                        <code className="max-w-full truncate rounded bg-surface-muted px-1.5 py-0.5 font-mono text-[11px] text-ink-faint">
+                          /portfolio#a-{item.slug}
+                        </code>
+                        <button
+                          type="button"
+                          onClick={() => void copierLien(item)}
+                          className="text-[11px] font-medium text-ink-soft underline-offset-2 transition-colors hover:text-primary hover:underline"
+                        >
+                          {lienCopie?.id === item.id
+                            ? lienCopie.ok
+                              ? "Lien copie"
+                              : "Copie refusee par le navigateur"
+                            : "Copier le lien direct"}
+                        </button>
+                      </>
+                    )}
+                    {item.guide_url && (
+                      <a
+                        href={item.guide_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={item.guide_url}
+                        className="inline-flex min-h-7 items-center gap-1.5 rounded-full bg-primary/15 px-2.5 text-[11px] font-medium text-primary transition-colors hover:bg-primary/25"
+                      >
+                        <IconeDemo />
+                        {typeDemo(item.guide_url)}
+                      </a>
+                    )}
                   </div>
                 )}
               </div>

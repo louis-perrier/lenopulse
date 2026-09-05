@@ -620,7 +620,7 @@ export default function PortfolioPage() {
         <div className="relative">
           {/* La methode tient dans une colonne etroite et centree : sur 1180 px les
               cartes s'etirent bien au dela de la longueur de lecture. */}
-          <div className="mx-auto max-w-[46rem]">
+          <div className="mx-auto max-w-[52rem]">
             <h2 className="pb-2 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
               <RevealTitle>How I work</RevealTitle>
             </h2>
@@ -701,7 +701,7 @@ export default function PortfolioPage() {
                 <div className="min-w-0">
                   <div className="text-[15px] font-semibold text-ink">Louis Perrier</div>
                   <div className="font-mono text-[11.5px] text-ink-faint">
-                    Nantes, France
+                    Rennes, France
                   </div>
                 </div>
               </div>

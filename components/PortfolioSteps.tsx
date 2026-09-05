@@ -18,12 +18,12 @@ export default function PortfolioSteps() {
         className="absolute left-3.5 top-3 h-[calc(100%-3rem)] w-px -translate-x-1/2 origin-top bg-linear-to-b from-primary/70 via-primary/30 to-transparent"
       />
 
-      <ol className="grid gap-3">
+      <ol className="grid gap-4">
         {cfg.steps.map((s, i) => (
           <li key={s.title}>
             <Reveal
               delay={i * 0.1}
-              className="grid grid-cols-[1.75rem_1fr] items-start gap-x-3.5 sm:gap-x-5"
+              className="grid grid-cols-[1.75rem_1fr] items-start gap-x-4 sm:gap-x-6"
             >
               <span
                 className={`mt-3 flex h-7 w-7 items-center justify-center rounded-full border font-mono text-[11px] font-semibold ${
@@ -35,15 +35,15 @@ export default function PortfolioSteps() {
                 {i + 1}
               </span>
 
-              <article className="card-hairline rounded-2xl border border-border bg-surface p-4.5 sm:p-5">
+              <article className="card-hairline rounded-2xl border border-border bg-surface p-5 sm:p-6.5">
                 <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
                   {s.eyebrow}
                 </span>
-                <h3 className="mt-2 text-[17px] font-semibold text-ink">{s.title}</h3>
-                <p className="mt-2 max-w-[62ch] text-[14px] leading-relaxed text-ink-soft">
+                <h3 className="mt-2 text-[18px] font-semibold text-ink sm:text-[19px]">{s.title}</h3>
+                <p className="mt-2.5 max-w-[76ch] text-[14.5px] leading-relaxed text-ink-soft sm:text-[15px]">
                   {s.text}
                 </p>
-                <span className="mt-3.5 inline-flex items-center gap-2 rounded-full border border-border bg-surface-raised px-2.5 py-1 font-mono text-[11px] text-ink-soft">
+                <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface-raised px-3 py-1.5 font-mono text-[11.5px] text-ink-soft">
                   <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
                   {s.note}
                 </span>

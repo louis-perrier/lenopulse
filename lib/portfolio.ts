@@ -7,7 +7,7 @@ export const portfolioConfig = {
   githubUrl: "https://github.com/louis-perrier",
   youtubeUrl: "https://www.youtube.com/@louis-perrier",
 
-  eyebrow: "Full-stack & AI developer . Nantes, France",
+  eyebrow: "Full-stack & AI developer . Rennes, France",
   titleStart: "I build systems that ",
   titleHighlight: "run without me.",
   subtitle: "Voice agents, automation and web apps. One developer, end to end.",
@@ -70,7 +70,7 @@ export const portfolioConfig = {
 
   footer: [
     "Louis Perrier . LENOPULSE, registered micro-entreprise, France",
-    "Nantes, UTC+2 . Available more than 30 hrs / week",
+    "Rennes, UTC+2 . Available more than 30 hrs / week",
   ],
 } as const;
 

@@ -618,81 +618,97 @@ export default function PortfolioPage() {
           aria-hidden="true"
         />
         <div className="relative">
-          <h2 className="pb-2 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
-            <RevealTitle>How I work</RevealTitle>
-          </h2>
-          <Reveal delay={0.1}>
-            <p className="max-w-[52ch] pb-5.5 text-sm text-ink-soft">
-              Four steps, the same on every project. You always know what happens next
-              and what I need from you.
-            </p>
-          </Reveal>
-          <div className="pf-rule mb-8" />
+          {/* La methode tient dans une colonne etroite et centree : sur 1180 px les
+              cartes s'etirent bien au dela de la longueur de lecture. */}
+          <div className="mx-auto max-w-[46rem]">
+            <h2 className="pb-2 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
+              <RevealTitle>How I work</RevealTitle>
+            </h2>
+            <Reveal delay={0.1}>
+              <p className="max-w-[52ch] pb-5.5 text-sm text-ink-soft">
+                Four steps, the same on every project. You always know what happens next
+                and what I need from you.
+              </p>
+            </Reveal>
+            <div className="pf-rule mb-8" />
 
-          {/* La methode a gauche, la personne a droite. Sans avis clients sur Upwork,
-              un visage rassure plus qu'un visuel decoratif. La carte reste collee en
-              haut le temps que la timeline defile. */}
-          <div className="mb-8.5 grid gap-7 lg:grid-cols-[1fr_20rem] lg:items-start lg:gap-12">
             <PortfolioSteps />
-
-            <div className="flex items-center gap-4 rounded-2xl border border-border bg-surface p-4 lg:sticky lg:top-24">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/louis.png"
-                alt="Louis Perrier"
-                loading="lazy"
-                className="h-16 w-16 flex-none rounded-full border border-primary/30 object-cover"
-              />
-              <div>
-                <div className="text-[15px] font-semibold text-ink">Louis Perrier</div>
-                <p className="mt-1 text-[13.5px] leading-relaxed text-ink-soft">
-                  You talk to the person who writes the code. No agency, no account
-                  manager.
-                </p>
-              </div>
-            </div>
           </div>
 
-          <Reveal className="rounded-3xl border border-border bg-gradient-to-b from-surface-raised to-surface px-5 py-6.5 text-center sm:px-8 sm:py-10">
-            <h2 className="font-display text-[clamp(1.5rem,6.2vw,2rem)] font-semibold text-ink">
-              What&apos;s next?
-            </h2>
-            <div className="mt-5.5 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a
-                href={cfg.upworkUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-background transition-colors hover:bg-primary-hover"
-              >
-                Hire me on Upwork
-              </a>
-              <a
-                href={`mailto:${cfg.email}?subject=Project%20enquiry`}
-                className="inline-flex min-h-11 items-center rounded-full border border-border px-5 text-sm font-semibold text-ink transition-colors hover:border-primary hover:text-accent"
-              >
-                Email me directly
-              </a>
+          {/* Carte de cloture : l'action a gauche, la personne a droite. Sans avis
+              clients sur Upwork, un visage rassure plus qu'un visuel decoratif. */}
+          <Reveal className="mt-14 grid gap-7 rounded-3xl border border-border bg-gradient-to-b from-surface-raised to-surface px-5 py-7 sm:mt-18 sm:px-8 sm:py-10 lg:grid-cols-[1fr_19rem] lg:items-center lg:gap-12">
+            <div>
+              <h2 className="font-display text-[clamp(1.5rem,6.2vw,2rem)] font-semibold text-ink">
+                What&apos;s next?
+              </h2>
+              <p className="mt-2.5 max-w-[46ch] text-[15px] leading-relaxed text-ink-soft">
+                Send the brief, or just the problem you want gone. You get an answer
+                within 24 h, questions first and a plan after.
+              </p>
+
+              <div className="mt-5.5 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <a
+                  href={cfg.upworkUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-background transition-colors hover:bg-primary-hover"
+                >
+                  Hire me on Upwork
+                </a>
+                <a
+                  href={`mailto:${cfg.email}?subject=Project%20enquiry`}
+                  className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-5 text-sm font-semibold text-ink transition-colors hover:border-primary hover:text-accent"
+                >
+                  Email me directly
+                </a>
+              </div>
+
+              <div className="mt-5 flex items-center gap-2.5 border-t border-border/60 pt-5">
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-ink-faint">
+                  Also here
+                </span>
+                <a
+                  href={cfg.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-ink-soft transition-colors hover:border-primary hover:text-primary"
+                >
+                  <IconGithub className="h-5 w-5" />
+                </a>
+                <a
+                  href={cfg.youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-ink-soft transition-colors hover:border-primary hover:text-primary"
+                >
+                  <IconYoutube className="h-5 w-5" />
+                </a>
+              </div>
             </div>
 
-            <div className="mt-6 flex items-center justify-center gap-2.5">
-              <a
-                href={cfg.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-ink-soft transition-colors hover:border-primary hover:text-primary"
-              >
-                <IconGithub className="h-5 w-5" />
-              </a>
-              <a
-                href={cfg.youtubeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="YouTube"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-ink-soft transition-colors hover:border-primary hover:text-primary"
-              >
-                <IconYoutube className="h-5 w-5" />
-              </a>
+            <div className="grid gap-3.5 rounded-2xl border border-border bg-background p-5">
+              <div className="flex items-center gap-3.5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/louis.png"
+                  alt="Louis Perrier"
+                  loading="lazy"
+                  className="h-14 w-14 flex-none rounded-full border border-primary/30 object-cover"
+                />
+                <div className="min-w-0">
+                  <div className="text-[15px] font-semibold text-ink">Louis Perrier</div>
+                  <div className="font-mono text-[11.5px] text-ink-faint">
+                    Nantes, France
+                  </div>
+                </div>
+              </div>
+              <p className="text-[13.5px] leading-relaxed text-ink-soft">
+                You talk to the person who writes the code. No agency, no account
+                manager.
+              </p>
             </div>
           </Reveal>
         </div>

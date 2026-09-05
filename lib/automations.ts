@@ -112,6 +112,17 @@ export function lienDirect(a: PortfolioAutomation): string {
   return `${window.location.origin}/portfolio#a-${ancre(a)}`;
 }
 
+// Les captures sont envoyees telles quelles depuis n8n, donc en 1920 px et
+// environ 200 ko de PNG, pour etre affichees sur 160 px de haut. Le point de
+// rendu de Storage les redimensionne et les sert en WebP a la volee, ce qui
+// evite d'avoir a reuploader quoi que ce soit. Une URL qui ne vient pas de
+// Storage est renvoyee intacte.
+export function imageRedimensionnee(url: string, largeur: number): string {
+  const objet = "/storage/v1/object/public/";
+  if (!url.includes(objet)) return url;
+  return `${url.replace(objet, "/storage/v1/render/image/public/")}?width=${largeur}&quality=75`;
+}
+
 // La description n'est pas affichee dans le catalogue mais reste cherchable :
 // elle porte le vocabulaire metier que le resume n'a pas la place de dire.
 export function construireIndex(liste: PortfolioAutomation[]): Map<string, string> {

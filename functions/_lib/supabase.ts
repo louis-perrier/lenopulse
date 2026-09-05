@@ -150,6 +150,10 @@ export async function sbUploadPublic(
           Authorization: `Bearer ${key}`,
           "Content-Type": contentType,
           "x-upsert": "true",
+          // Le nom du fichier porte un horodatage et un uuid, il ne sera jamais
+          // reecrit. Sans cet en-tete Storage repond no-cache et le navigateur
+          // revalide chaque capture a chaque visite.
+          "cache-control": "max-age=31536000, immutable",
         },
         body,
       }

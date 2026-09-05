@@ -3,7 +3,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { PortfolioAutomation } from "@/lib/portfolio";
 import type { TriAutomations } from "@/lib/automations";
-import { construireIndex, facettesOutils, filtrerTrier } from "@/lib/automations";
+import {
+  construireIndex,
+  facettesOutils,
+  filtrerTrier,
+  imageRedimensionnee,
+} from "@/lib/automations";
 import {
   IconeCheck,
   IconeCopie,
@@ -41,9 +46,12 @@ function Vignette({ a }: { a: PortfolioAutomation }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={a.image_url}
+      src={imageRedimensionnee(a.image_url, 160)}
       alt=""
+      width={80}
+      height={56}
       loading="lazy"
+      decoding="async"
       className="h-14 w-20 flex-none rounded-lg border border-border object-cover object-top"
     />
   );
@@ -192,13 +200,19 @@ function PastilleFiltre({
   );
 }
 
+// Le panneau est monte des le depart pour que sa transition joue et que les
+// filtres survivent a une fermeture. Ses vignettes se telechargeaient donc
+// alors que personne ne l'avait ouvert : `listeMontee` reste faux tant que le
+// visiteur n'a pas clique, et le parent le bascule dans son gestionnaire.
 export default function AutomationsCatalog({
   automations,
   open,
+  listeMontee,
   onClose,
 }: {
   automations: PortfolioAutomation[];
   open: boolean;
+  listeMontee: boolean;
   onClose: () => void;
 }) {
   const [q, setQ] = useState("");
@@ -442,7 +456,7 @@ export default function AutomationsCatalog({
         </div>
 
         <div ref={zone} className="min-h-0 flex-1 overflow-y-auto px-4 py-3.5 sm:px-6">
-          {tranche.length === 0 ? (
+          {!listeMontee ? null : tranche.length === 0 ? (
             <p className="py-8 text-center text-sm text-ink-soft">
               No automation matches these filters.
             </p>

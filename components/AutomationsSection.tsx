@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { PortfolioAutomation } from "@/lib/portfolio";
-import { ancre, cleDeLAncre, promouvoir } from "@/lib/automations";
+import { ancre, cleDeLAncre, imageRedimensionnee, promouvoir } from "@/lib/automations";
 import AutomationsCatalog from "./AutomationsCatalog";
 import {
   Chip,
@@ -42,9 +42,15 @@ function AutomationCard({ automation }: { automation: PortfolioAutomation }) {
         <div className="aspect-[16/9] max-h-40 overflow-hidden border-b border-border bg-surface">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={automation.image_url}
+            src={imageRedimensionnee(automation.image_url, 640)}
+            srcSet={`${imageRedimensionnee(automation.image_url, 480)} 480w, ${imageRedimensionnee(
+              automation.image_url,
+              640
+            )} 640w, ${imageRedimensionnee(automation.image_url, 960)} 960w`}
+            sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
             alt={`${automation.name}, canvas n8n`}
             loading="lazy"
+            decoding="async"
             className="h-full w-full object-cover object-top"
           />
         </div>
@@ -178,6 +184,7 @@ export default function AutomationsSection() {
   const [automations, setAutomations] = useState<PortfolioAutomation[]>([]);
   const [promue, setPromue] = useState<string | null>(null);
   const [catalogueOuvert, setCatalogueOuvert] = useState(false);
+  const [catalogueVu, setCatalogueVu] = useState(false);
   const fermerCatalogue = useCallback(() => setCatalogueOuvert(false), []);
 
   useEffect(() => {
@@ -275,7 +282,10 @@ export default function AutomationsSection() {
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <button
               type="button"
-              onClick={() => setCatalogueOuvert(true)}
+              onClick={() => {
+                setCatalogueVu(true);
+                setCatalogueOuvert(true);
+              }}
               aria-haspopup="dialog"
               className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-primary/40 bg-surface px-5 text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-background sm:w-auto"
             >
@@ -290,6 +300,7 @@ export default function AutomationsSection() {
           <AutomationsCatalog
             automations={automations}
             open={catalogueOuvert}
+            listeMontee={catalogueVu}
             onClose={fermerCatalogue}
           />
         </>

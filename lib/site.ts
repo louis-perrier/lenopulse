@@ -12,6 +12,7 @@ export const siteConfig = {
     instagram: "https://instagram.com/louis.pilc",
     whatsapp: "https://wa.me/33781494953",
     linkedin: "https://www.linkedin.com/in/louis-perrier-lautopreneur/",
+    github: "https://github.com/louis-perrier",
   },
 };
 

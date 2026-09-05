@@ -4,6 +4,7 @@
 export const portfolioConfig = {
   upworkUrl: "https://upwork.com/freelancers/~01eb55d089d1e11d28",
   email: "louis.perrier.chenoise@gmail.com",
+  githubUrl: "https://github.com/louis-perrier",
 
   eyebrow: "Full-stack & AI developer . Nantes, France",
   titleStart: "I build systems that ",

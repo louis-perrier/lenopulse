@@ -425,6 +425,14 @@ export default function PortfolioPage() {
             >
               {cfg.email}
             </a>
+            <a
+              href={cfg.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center font-mono text-[13px] text-ink-soft transition-colors hover:text-accent"
+            >
+              github.com/louis-perrier
+            </a>
           </div>
 
           <ul className="mt-7.5 flex flex-wrap gap-x-6.5 gap-y-4.5 border-t border-border/60 pt-4">

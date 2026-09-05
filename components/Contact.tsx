@@ -12,6 +12,7 @@ import {
   IconInstagram,
   IconWhatsapp,
   IconLinkedin,
+  IconGithub,
 } from "./Icons";
 
 const socialMeta: Record<SocialKey, { label: string; Icon: typeof IconYoutube }> = {
@@ -19,6 +20,7 @@ const socialMeta: Record<SocialKey, { label: string; Icon: typeof IconYoutube }>
   instagram: { label: "Instagram", Icon: IconInstagram },
   whatsapp: { label: "WhatsApp", Icon: IconWhatsapp },
   linkedin: { label: "LinkedIn", Icon: IconLinkedin },
+  github: { label: "GitHub", Icon: IconGithub },
 };
 
 type Status = "idle" | "sending" | "success" | "error";

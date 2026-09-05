@@ -14,7 +14,7 @@ export const portfolioConfig = {
 
   facts: [
     { label: "Stack", value: "Next.js . Supabase . Python" },
-    { label: "Rate", value: "From $25 / hr" },
+    { label: "Rate", value: "From $15 / hr" },
     { label: "Reply", value: "Within 24 h" },
     { label: "Speaks", value: "EN . FR . ES" },
   ],

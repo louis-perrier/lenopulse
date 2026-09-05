@@ -1,8 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { portfolioConfig as cfg, type PortfolioProject } from "@/lib/portfolio";
 import AutomationsSection from "./AutomationsSection";
+import PortfolioSteps from "./PortfolioSteps";
+import Reveal from "./Reveal";
+import RevealTitle from "./RevealTitle";
+import { IconGithub, IconYoutube } from "./Icons";
 
 // Groupe de capacites tel que renvoye par /api/portfolio. La liste vit dans
 // app_config et s'edite depuis /admin ; en son absence, on retombe sur celle
@@ -328,6 +333,15 @@ export default function PortfolioPage() {
     cfg.capabilities
   );
 
+  // Parallaxe du halo pendant le scroll du hero, comme sur la home.
+  const reduceMotion = useReducedMotion();
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const haloY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 120]);
+
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -391,26 +405,42 @@ export default function PortfolioPage() {
       </header>
 
       {/* Hero. Une these courte, puis les faits utiles a un acheteur. */}
-      <section className="relative overflow-hidden">
-        <div
-          className="glow-gold absolute -top-45 -left-40 h-115 w-115 rounded-full"
-          aria-hidden="true"
-        />
-        <div className="relative mx-auto max-w-[1180px] px-5 pt-11 pb-12 sm:px-8 sm:pt-16 sm:pb-16">
-          <p className="font-mono text-[11px] font-medium tracking-[0.14em] uppercase text-primary">
+      <section ref={heroRef} className="relative overflow-hidden">
+        <motion.div style={{ y: haloY }} aria-hidden="true" className="absolute inset-0">
+          <div className="glow-gold absolute -top-45 -left-40 h-115 w-115 animate-float rounded-full" />
+        </motion.div>
+        <div className="relative mx-auto max-w-[1180px] px-5 pt-14 pb-18 sm:px-8 sm:pt-20 sm:pb-24">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="font-mono text-[11px] font-medium tracking-[0.14em] uppercase text-primary"
+          >
             {cfg.eyebrow}
-          </p>
+          </motion.p>
 
           <h1 className="mt-4.5 max-w-[15ch] font-display text-[clamp(2rem,8.6vw,4.125rem)] leading-[1.08] font-semibold tracking-tight text-ink">
-            {cfg.titleStart}
-            <span className="text-gradient-gold">{cfg.titleHighlight}</span>
+            <RevealTitle delay={0.08}>
+              {cfg.titleStart}
+              <span className="text-gradient-gold">{cfg.titleHighlight}</span>
+            </RevealTitle>
           </h1>
 
-          <p className="mt-4.5 max-w-[54ch] text-base text-ink-soft sm:text-[17px]">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-4.5 max-w-[54ch] text-base text-ink-soft sm:text-[17px]"
+          >
             {cfg.subtitle}
-          </p>
+          </motion.p>
 
-          <div className="mt-6.5 flex flex-wrap items-center gap-3">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.26, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-6.5 flex flex-wrap items-center gap-3"
+          >
             <a
               href={cfg.upworkUrl}
               target="_blank"
@@ -425,24 +455,18 @@ export default function PortfolioPage() {
             >
               {cfg.email}
             </a>
-            <a
-              href={cfg.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center font-mono text-[13px] text-ink-soft transition-colors hover:text-accent"
-            >
-              github.com/louis-perrier
-            </a>
-          </div>
+          </motion.div>
 
-          <ul className="mt-7.5 flex flex-wrap gap-x-6.5 gap-y-4.5 border-t border-border/60 pt-4">
-            {cfg.facts.map((f) => (
-              <li key={f.label} className="grid gap-1 font-mono text-[13px] text-ink">
-                <Label>{f.label}</Label>
-                <span>{f.value}</span>
-              </li>
-            ))}
-          </ul>
+          <Reveal delay={0.34}>
+            <ul className="mt-7.5 flex flex-wrap gap-x-6.5 gap-y-4.5 border-t border-border/60 pt-4">
+              {cfg.facts.map((f) => (
+                <li key={f.label} className="grid gap-1 font-mono text-[13px] text-ink">
+                  <Label>{f.label}</Label>
+                  <span>{f.value}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
       </section>
 
@@ -452,9 +476,9 @@ export default function PortfolioPage() {
       <AutomationsSection />
 
       {/* Projets mis en avant */}
-      <section className="mx-auto max-w-[1180px] px-5 py-11 sm:px-8 sm:py-16">
+      <section className="mx-auto max-w-[1180px] px-5 py-16 sm:px-8 sm:py-24">
         <h2 className="pb-5.5 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
-          Selected work
+          <RevealTitle>Selected work</RevealTitle>
         </h2>
         <div className="pf-rule mb-7" />
 
@@ -485,7 +509,7 @@ export default function PortfolioPage() {
         )}
 
         {status === "ready" && featured.length > 0 && (
-          <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-6">
+          <Reveal className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-6">
             {featured.map(({ projet, inverse }) => (
               <ProjectCard
                 key={projet.id}
@@ -494,17 +518,17 @@ export default function PortfolioPage() {
                 inverse={inverse}
               />
             ))}
-          </div>
+          </Reveal>
         )}
       </section>
 
       {/* Realisations secondaires */}
       {status === "ready" && also.length > 0 && (
-        <section className="mx-auto max-w-[1180px] px-5 pb-11 sm:px-8 sm:pb-16">
+        <section className="mx-auto max-w-[1180px] px-5 pb-16 sm:px-8 sm:pb-24">
           <h2 className="pb-5.5 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
-            Also built
+            <RevealTitle>Also built</RevealTitle>
           </h2>
-          <div className="grid gap-2.5 sm:grid-cols-2">
+          <Reveal className="grid gap-2.5 sm:grid-cols-2">
             {also.map((p) => {
               const inner = (
                 <>
@@ -557,7 +581,7 @@ export default function PortfolioPage() {
                 </div>
               );
             })}
-          </div>
+          </Reveal>
         </section>
       )}
 
@@ -568,11 +592,11 @@ export default function PortfolioPage() {
           localement par .section-dark, donc les utilitaires des enfants
           basculent tout seuls. */}
       <section className="section-dark">
-        <div className="mx-auto max-w-[1180px] px-5 py-11 sm:px-8 sm:py-16">
+        <div className="mx-auto max-w-[1180px] px-5 py-16 sm:px-8 sm:py-24">
           <h2 className="pb-5.5 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
-            Capabilities
+            <RevealTitle>Capabilities</RevealTitle>
           </h2>
-          <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+          <Reveal className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
             {capabilities.map((c) => (
               <div key={c.group} className="grid gap-2 bg-surface-raised p-4.5">
                 <Label>{c.group}</Label>
@@ -583,39 +607,35 @@ export default function PortfolioPage() {
                 </div>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Methode et appel a l'action */}
-      <section className="relative mx-auto max-w-[1180px] overflow-hidden px-5 py-11 sm:px-8 sm:py-16">
+      <section className="relative mx-auto max-w-[1180px] overflow-hidden px-5 py-16 sm:px-8 sm:py-24">
         <div
           className="glow-gold absolute -right-50 -bottom-75 h-130 w-130 rounded-full"
           aria-hidden="true"
         />
         <div className="relative">
-          <h2 className="pb-5.5 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
-            How I work
+          <h2 className="pb-2 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
+            <RevealTitle>How I work</RevealTitle>
           </h2>
+          <Reveal delay={0.1}>
+            <p className="max-w-[52ch] pb-5.5 text-sm text-ink-soft">
+              Four steps, the same on every project. You always know what happens next
+              and what I need from you.
+            </p>
+          </Reveal>
+          <div className="pf-rule mb-8" />
 
-          {/* Methode a gauche, la personne a droite. Sans avis clients sur Upwork,
-              un visage rassure plus qu'un visuel decoratif. */}
-          <div className="mb-8.5 grid gap-7 lg:grid-cols-[1fr_20rem] lg:items-center lg:gap-12">
-            <div className="grid gap-1">
-              {cfg.steps.map((s, i) => (
-                <div
-                  key={s}
-                  className="grid grid-cols-[26px_1fr] items-center gap-3 border-t border-border/60 py-3.5"
-                >
-                  <span className="font-mono text-xs text-primary">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-[15px] font-medium text-ink">{s}</span>
-                </div>
-              ))}
-            </div>
+          {/* La methode a gauche, la personne a droite. Sans avis clients sur Upwork,
+              un visage rassure plus qu'un visuel decoratif. La carte reste collee en
+              haut le temps que la timeline defile. */}
+          <div className="mb-8.5 grid gap-7 lg:grid-cols-[1fr_20rem] lg:items-start lg:gap-12">
+            <PortfolioSteps />
 
-            <div className="flex items-center gap-4 rounded-2xl border border-border bg-surface p-4">
+            <div className="flex items-center gap-4 rounded-2xl border border-border bg-surface p-4 lg:sticky lg:top-24">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/louis.png"
@@ -633,7 +653,7 @@ export default function PortfolioPage() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-border bg-gradient-to-b from-surface-raised to-surface px-5 py-6.5 text-center sm:px-8 sm:py-10">
+          <Reveal className="rounded-3xl border border-border bg-gradient-to-b from-surface-raised to-surface px-5 py-6.5 text-center sm:px-8 sm:py-10">
             <h2 className="font-display text-[clamp(1.5rem,6.2vw,2rem)] font-semibold text-ink">
               What&apos;s next?
             </h2>
@@ -653,7 +673,28 @@ export default function PortfolioPage() {
                 Email me directly
               </a>
             </div>
-          </div>
+
+            <div className="mt-6 flex items-center justify-center gap-2.5">
+              <a
+                href={cfg.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-ink-soft transition-colors hover:border-primary hover:text-primary"
+              >
+                <IconGithub className="h-5 w-5" />
+              </a>
+              <a
+                href={cfg.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-ink-soft transition-colors hover:border-primary hover:text-primary"
+              >
+                <IconYoutube className="h-5 w-5" />
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 

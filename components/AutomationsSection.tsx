@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { PortfolioAutomation } from "@/lib/portfolio";
 import { ancre, cleDeLAncre, imageRedimensionnee, promouvoir } from "@/lib/automations";
 import AutomationsCatalog from "./AutomationsCatalog";
+import Reveal from "./Reveal";
+import RevealTitle from "./RevealTitle";
 import {
   Chip,
   IconeCheck,
@@ -256,16 +258,18 @@ export default function AutomationsSection() {
   if (status === "error") return null;
 
   return (
-    <section className="mx-auto max-w-[1180px] px-5 pt-11 sm:px-8 sm:pt-16">
+    <section className="mx-auto max-w-[1180px] px-5 pt-16 sm:px-8 sm:pt-24">
       <h2 className="pb-2 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
-        Automations you can take
+        <RevealTitle>Automations you can take</RevealTitle>
       </h2>
-      <p className="pb-5.5 max-w-[52ch] text-sm text-ink-soft">
-        Simplified from real client builds. Copy, paste in your n8n, run. No sign up.
-      </p>
+      <Reveal delay={0.1}>
+        <p className="pb-5.5 max-w-[52ch] text-sm text-ink-soft">
+          Simplified from real client builds. Copy, paste in your n8n, run. No sign up.
+        </p>
+      </Reveal>
       <div className="pf-rule mb-7" />
 
-      <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+      <Reveal className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
         {status === "loading" ? (
           <>
             <CardSkeleton />
@@ -275,7 +279,7 @@ export default function AutomationsSection() {
         ) : (
           visibles.map((a) => <AutomationCard key={a.id} automation={a} />)
         )}
-      </div>
+      </Reveal>
 
       {status === "ready" && automations.length > MAX_CARTES && (
         <>

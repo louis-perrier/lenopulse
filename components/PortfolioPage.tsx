@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useCallback, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { portfolioConfig as cfg, type PortfolioProject } from "@/lib/portfolio";
 import AutomationsSection from "./AutomationsSection";
 import PortfolioSteps from "./PortfolioSteps";
@@ -333,15 +333,6 @@ export default function PortfolioPage() {
     cfg.capabilities
   );
 
-  // Parallaxe du halo pendant le scroll du hero, comme sur la home.
-  const reduceMotion = useReducedMotion();
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const haloY = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : 120]);
-
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -405,11 +396,8 @@ export default function PortfolioPage() {
       </header>
 
       {/* Hero. Une these courte, puis les faits utiles a un acheteur. */}
-      <section ref={heroRef} className="relative overflow-hidden">
-        <motion.div style={{ y: haloY }} aria-hidden="true" className="absolute inset-0">
-          <div className="glow-gold absolute -top-45 -left-40 h-115 w-115 animate-float rounded-full" />
-        </motion.div>
-        <div className="relative mx-auto max-w-[1180px] px-5 pt-14 pb-18 sm:px-8 sm:pt-20 sm:pb-24">
+      <section>
+        <div className="mx-auto max-w-[1180px] px-5 pt-14 pb-10 sm:px-8 sm:pt-20 sm:pb-12">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -612,12 +600,8 @@ export default function PortfolioPage() {
       </section>
 
       {/* Methode et appel a l'action */}
-      <section className="relative mx-auto max-w-[1180px] overflow-hidden px-5 py-16 sm:px-8 sm:py-24">
-        <div
-          className="glow-gold absolute -right-50 -bottom-75 h-130 w-130 rounded-full"
-          aria-hidden="true"
-        />
-        <div className="relative">
+      <section className="mx-auto max-w-[1180px] px-5 py-16 sm:px-8 sm:py-24">
+        <div>
           {/* La methode tient dans une colonne etroite et centree : sur 1180 px les
               cartes s'etirent bien au dela de la longueur de lecture. */}
           <div className="mx-auto max-w-[52rem]">

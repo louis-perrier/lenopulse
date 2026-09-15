@@ -258,7 +258,7 @@ export default function AutomationsSection() {
   if (status === "error") return null;
 
   return (
-    <section className="mx-auto max-w-[1180px] px-5 pt-16 sm:px-8 sm:pt-24">
+    <section className="mx-auto max-w-[1180px] px-5 pt-10 sm:px-8 sm:pt-12">
       <h2 className="pb-2 font-display text-[clamp(1.625rem,6.4vw,2.125rem)] font-semibold text-ink">
         <RevealTitle>Automations you can take</RevealTitle>
       </h2>
